@@ -14,7 +14,7 @@ public class StringNotTerminatedException extends TokenExtractionException {
 	@Override
 	public String getMessage()
 	{
-		return String.format("String starting at position %s not terminated: %s", token.start(), token.string());
+		return String.format("String starting at position %s not terminated: %s", token.start(), token);
 	}
 
 }

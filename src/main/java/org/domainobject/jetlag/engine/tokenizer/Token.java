@@ -29,9 +29,6 @@ public abstract class Token {
 	 */
 	public Token(String rule, int start)
 	{
-		if (rule == null) {
-			throw new NullPointerException("First argument to Token constructor must not null");
-		}
 		this.rule = rule;
 		this.start = start;
 	}
@@ -90,16 +87,28 @@ public abstract class Token {
 
 
 	/**
-	 * Get the {@code String} extracted from the rule by this {@code Token}.
+	 * Get the token extracted from the rule by this {@code Token} instance
 	 * 
 	 * @return The {@code String} extracted from the rule by this {@code Token}
 	 */
-	public String string()
+	public String get()
 	{
 		if (string == null) {
 			throw new IllegalStateException("Token not extracted yet");
 		}
 		return string.toString();
+	}
+
+
+	/**
+	 * Equivalent to calling {@link #get()}.
+	 * 
+	 * @return The {@code String} representation of this token
+	 */
+	@Override
+	public String toString()
+	{
+		return get();
 	}
 
 
@@ -151,7 +160,7 @@ public abstract class Token {
 	 *         if the cursor ({@link #end}) has has moved past the end of the
 	 *         rule.
 	 */
-	protected char advance()
+	protected final char advance()
 	{
 		return end + 1 == rule.length() ? NIL : rule.charAt(++end);
 	}

@@ -3,8 +3,9 @@ package org.domainobject.jetlag.engine.tokenizer;
 import java.util.Arrays;
 
 /**
- * A seriously dressed-down {@link StringBuilder}, only capable of appending
- * characters, and with knowledge of what tokens are like (e.g. average length).
+ * A seriously dressed-down {@link StringBuilder}, capable only of appending
+ * characters, and with some knowledge of what tokens are like (e.g. average
+ * length).
  * 
  * @author ayco
  * @created Apr 25, 2015
@@ -22,16 +23,6 @@ final class TokenBuilder {
 
 	private char[] value;
 	private int count;
-
-
-	/**
-	 * Create a {@code TokenBuilder} with an initial capacity of storing 1
-	 * character. Appropriate for operators, parentheses, etc.
-	 */
-	TokenBuilder()
-	{
-		value = new char[1];
-	}
 
 
 	/**
