@@ -1,6 +1,9 @@
 package org.domainobject.jetlag.engine.tokenizer;
 
 /**
+ * A {@code Token} capable of extracting numerical strings (either integer or
+ * decimal).
+ * 
  * @author ayco
  * @created Apr 27, 2015
  *
@@ -21,7 +24,7 @@ public class Number extends Token {
 	{
 		string = new TokenBuilder(8);
 		end = start;
-		// At this point we either have a '.' or a digit
+		// The cursor (end) now points to either a '.' or a digit
 		decimal = false;
 		for (char c = curchar();; c = advance()) {
 			if (Character.isDigit(c)) {

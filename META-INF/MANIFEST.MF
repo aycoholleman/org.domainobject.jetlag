@@ -4,3 +4,4 @@ Bundle-Name: org.domainobject.jetlag.engine
 Bundle-SymbolicName: org.domainobject.jetlag.engine
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit
