@@ -35,6 +35,16 @@ public abstract class Token {
 
 
 	/**
+	 * Get the type of the token. Could also be inferred by calling
+	 * {@code getClass()} or using {@code instanceof}, but this is a bit more
+	 * friendly.
+	 * 
+	 * @return The type of the token
+	 */
+	public abstract TokenType getType();
+
+
+	/**
 	 * Extract the token from the rule. Subclasses are expected to do two
 	 * things:
 	 * <ol>
@@ -53,14 +63,6 @@ public abstract class Token {
 	 * @throws TokenExtractionException
 	 */
 	public abstract void extract() throws TokenExtractionException;
-
-
-	/**
-	 * Get the type of the token.
-	 * 
-	 * @return The type of the token
-	 */
-	public abstract TokenType getType();
 
 
 	/**
