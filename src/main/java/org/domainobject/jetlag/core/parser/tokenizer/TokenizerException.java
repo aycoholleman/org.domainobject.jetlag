@@ -1,4 +1,4 @@
-package org.domainobject.jetlag.engine.tokenizer;
+package org.domainobject.jetlag.core.parser.tokenizer;
 
 /**
  * The base class of all exceptions that may occur while retrieving tokens from

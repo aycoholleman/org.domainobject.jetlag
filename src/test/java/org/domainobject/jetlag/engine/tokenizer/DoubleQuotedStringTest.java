@@ -3,6 +3,8 @@ package org.domainobject.jetlag.engine.tokenizer;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.domainobject.jetlag.core.parser.tokenizer.DoubleQuotedString;
+import org.domainobject.jetlag.core.parser.tokenizer.StringNotTerminatedException;
 import org.junit.Test;
 
 /**
@@ -14,7 +16,7 @@ public class DoubleQuotedStringTest {
 
 	/**
 	 * Test method for
-	 * {@link org.domainobject.jetlag.engine.tokenizer.DoubleQuotedString#extract()}
+	 * {@link org.domainobject.jetlag.core.parser.tokenizer.DoubleQuotedString#extract()}
 	 * .
 	 */
 	@Test

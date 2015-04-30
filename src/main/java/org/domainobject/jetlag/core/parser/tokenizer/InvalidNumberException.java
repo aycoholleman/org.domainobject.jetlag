@@ -1,4 +1,4 @@
-package org.domainobject.jetlag.engine.tokenizer;
+package org.domainobject.jetlag.core.parser.tokenizer;
 
 public final class InvalidNumberException extends TokenExtractionException {
 

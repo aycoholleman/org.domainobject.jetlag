@@ -1,6 +1,6 @@
-package org.domainobject.jetlag.engine.tokenizer;
+package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.domainobject.jetlag.engine.tokenizer.TokenBuilder.NIL;
+import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
 
 /**
  * Base class of all tokens.

@@ -1,9 +1,7 @@
-package org.domainobject.jetlag.engine.tokenizer;
+package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.domainobject.jetlag.engine.tokenizer.TokenBuilder.CR;
-import static org.domainobject.jetlag.engine.tokenizer.TokenBuilder.*;
-import static org.domainobject.jetlag.engine.tokenizer.TokenBuilder.LF;
-import static org.domainobject.jetlag.engine.tokenizer.TokenBuilder.NIL;
+import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
