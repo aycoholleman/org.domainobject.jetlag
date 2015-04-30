@@ -32,8 +32,8 @@ public final class RightParenthesis extends Token {
 		string = new TokenBuilder(1);
 		// The cursor (end) now points to the right parenthesis.
 		string.add('(');
+		// Move cursor past token
 		end = start + 1;
-		// Move past it
 	}
 
 }
