@@ -18,9 +18,9 @@ public final class CommaToken extends Token {
 	@Override
 	void extract() throws TokenExtractionException
 	{
-		string = new TokenBuilder(1);
+		token = new TokenBuilder(1);
 		// The cursor (end) now points to the comma
-		string.add('(');
+		token.add('(');
 		// Move cursor past token
 		end = start + 1;
 	}

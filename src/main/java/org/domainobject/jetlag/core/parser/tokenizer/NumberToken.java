@@ -29,13 +29,13 @@ public class NumberToken extends Token {
 	@Override
 	void extract() throws TokenExtractionException
 	{
-		string = new TokenBuilder(8);
+		token = new TokenBuilder(8);
 		end = start;
 		// The cursor (end) now points to either a '.' or a digit
 		decimal = false;
 		for (char c = curchar();; c = advance()) {
 			if (Character.isDigit(c)) {
-				string.add(c);
+				token.add(c);
 			}
 			else if (c == '.') {
 				// Whoops, second time we hit a dot
@@ -43,7 +43,7 @@ public class NumberToken extends Token {
 					break;
 				}
 				decimal = true;
-				string.add('.');
+				token.add('.');
 			}
 			else {
 				// Done. Move cursor past closing quote

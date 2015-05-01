@@ -32,12 +32,12 @@ public class WordToken extends Token {
 	@Override
 	void extract() throws TokenExtractionException
 	{
-		string = new TokenBuilder(16);
+		token = new TokenBuilder(16);
 		end = start;
 		// The cursor (end) now points to either a '_' or a letter
 		char c = curchar();
 		do {
-			string.add(c);
+			token.add(c);
 			c = advance();
 		} while (Character.isLetterOrDigit(c) || c == '_');
 	}

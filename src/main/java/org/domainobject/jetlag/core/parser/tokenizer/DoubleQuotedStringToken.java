@@ -29,7 +29,7 @@ public final class DoubleQuotedStringToken extends Token {
 	@Override
 	void extract() throws StringNotTerminatedException
 	{
-		string = new TokenBuilder(16);
+		token = new TokenBuilder(16);
 		end = start;
 		// The cursor (end) now points to the opening quote.
 		LOOP: while (true) {
@@ -47,10 +47,10 @@ public final class DoubleQuotedStringToken extends Token {
 					if (c == NIL) {
 						throw new StringNotTerminatedException(this);
 					}
-					string.add(BACKSLASH, c);
+					token.add(BACKSLASH, c);
 					break;
 				default:
-					string.add(c);
+					token.add(c);
 
 			}
 		}

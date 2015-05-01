@@ -40,24 +40,24 @@ public final class OperatorToken extends Token {
 		char c0 = curchar();
 		char c1 = advance();
 		if (c1 == NIL) {
-			string = new TokenBuilder(1);
-			string.add(c0);
+			token = new TokenBuilder(1);
+			token.add(c0);
 			operator = Operator.forSymbol(String.valueOf(c0));
 		}
 		else {
 			operator = Operator.forSymbol(String.valueOf(new char[] { c0, c1 }));
 			if (operator == null) {
 				// We have a one-character operator
-				string = new TokenBuilder(1);
-				string.add(c0);
+				token = new TokenBuilder(1);
+				token.add(c0);
 				operator = Operator.forSymbol(String.valueOf(c0));
 				// We have already advanced past the one and only
 				// character (no need to increment cursor)
 			}
 			else {
 				// We have a two-character operator
-				string = new TokenBuilder(2);
-				string.add(c0, c1);
+				token = new TokenBuilder(2);
+				token.add(c0, c1);
 				// Move past 2nd character
 				++end;
 			}

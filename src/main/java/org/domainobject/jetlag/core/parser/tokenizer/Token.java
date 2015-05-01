@@ -14,7 +14,7 @@ public abstract class Token {
 	protected final String rule;
 	protected final int start;
 
-	protected TokenBuilder string;
+	protected TokenBuilder token;
 	protected int end = -1;
 
 
@@ -25,7 +25,7 @@ public abstract class Token {
 	 * @param rule
 	 *            The rule to extract the token from
 	 * @param start
-	 *            The string index of the first character of the token
+	 *            The token index of the first character of the token
 	 */
 	Token(String rule, int start)
 	{
@@ -49,13 +49,13 @@ public abstract class Token {
 	 * things:
 	 * <ol>
 	 * <li>Create and fill a {@link TokenBuilder} and assign it to the
-	 * {@link #string} field of this class
+	 * {@link #token} field of this class
 	 * <li>Set the {@link #end} field to right <i>after</i> the last character
 	 * of the token.
 	 * </ol>
 	 * Subclasses can and must assume that the {@link start} field contains the
 	 * index of the first character of the token. E.g. for a single quoted
-	 * string {@code start} is the position of the opening quote. After the
+	 * token {@code start} is the position of the opening quote. After the
 	 * extract method completes, {@code cursor} must be the index <i>after</i>
 	 * the closing quote.
 	 * 
@@ -66,9 +66,9 @@ public abstract class Token {
 
 
 	/**
-	 * Get the string index of the first character of the token.
+	 * Get the token index of the first character of the token.
 	 * 
-	 * @return The string index of the first character of the token
+	 * @return The token index of the first character of the token
 	 */
 	public int start()
 	{
@@ -77,10 +77,10 @@ public abstract class Token {
 
 
 	/**
-	 * Get the string index right <i>after</i> the last character of the token,
+	 * Get the token index right <i>after</i> the last character of the token,
 	 * or the index at which token extraction encountered an error.
 	 * 
-	 * @return The string index right after the last character of the token
+	 * @return The token index right after the last character of the token
 	 */
 	public int end()
 	{
@@ -95,10 +95,10 @@ public abstract class Token {
 	 */
 	public String get()
 	{
-		if (string == null) {
+		if (token == null) {
 			throw new IllegalStateException("Token not extracted yet");
 		}
-		return string.toString();
+		return token.toString();
 	}
 
 

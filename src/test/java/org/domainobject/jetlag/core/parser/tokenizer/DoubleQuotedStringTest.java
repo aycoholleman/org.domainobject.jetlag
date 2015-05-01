@@ -25,7 +25,7 @@ public class DoubleQuotedStringTest {
 		String token = "The Double Quoted String";
 
 		/*
-		 * Rule starts with double quoted string.
+		 * Rule starts with double quoted token.
 		 */
 		String rule = String.format("\"%s\"FOO", token);
 		DoubleQuotedStringToken dqs = new DoubleQuotedStringToken(rule, 0);
@@ -39,7 +39,7 @@ public class DoubleQuotedStringTest {
 		}
 
 		/*
-		 * Rule starts with double quoted string.
+		 * Rule starts with double quoted token.
 		 */
 		rule = String.format("\"%s\" FOO", token);
 		dqs = new DoubleQuotedStringToken(rule, 0);
@@ -64,7 +64,7 @@ public class DoubleQuotedStringTest {
 		}
 
 		/*
-		 * Rule ends with double quoted string.
+		 * Rule ends with double quoted token.
 		 */
 		rule = String.format("FOO\"%s\"", token);
 		dqs = new DoubleQuotedStringToken(rule, 3);
@@ -78,7 +78,7 @@ public class DoubleQuotedStringTest {
 		}
 
 		/*
-		 * Empty string
+		 * Empty token
 		 */
 		token = "";
 
