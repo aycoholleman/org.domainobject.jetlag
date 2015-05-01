@@ -1,6 +1,10 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.*;
+import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.APOSTROPHE;
+import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.CR;
+import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.DOUBLE_QUOTE;
+import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.LF;
+import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +44,23 @@ public final class Tokenizer {
 			return null;
 		}
 		Token token = null;
-		switch (c) {
-			case DOUBLE_QUOTE:
-				token = new DoubleQuotedStringToken(rule, cursor);
-				break;
-			default:
-				throw new IllegalCharacterException(c, cursor);
-		}
+		if (c == DOUBLE_QUOTE)
+			token = new DoubleQuotedStringToken(rule, cursor);
+		else if (c == APOSTROPHE)
+			token = new SingleQuotedStringToken(rule, cursor);
+		else if (Character.isDigit(c) || c == '.')
+			token = new NumberToken(rule, cursor);
+		else if (c == '(')
+			token = new LeftParenthesisToken(rule, cursor);
+		else if (c == ')')
+			token = new RightParenthesis(rule, cursor);
+		else if (c == ',')
+			token = new CommaToken(rule, cursor);
+		else if(Character.isJavaIdentifierStart(c) && c != '$')
+			token = new WordToken(rule, cursor);
+		else
+			throw new IllegalCharacterException(c, cursor);
+
 		token.extract();
 		cursor = token.end();
 		return token;
