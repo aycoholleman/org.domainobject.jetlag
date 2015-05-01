@@ -56,7 +56,7 @@ public enum Operator
 	 * @return Whether or not the character is the first character of at least
 	 *         one operator
 	 */
-	public static boolean isOperatorStartChar(char c)
+	public static boolean isOperatorStart(char c)
 	{
 		return Arrays.binarySearch(startChars, c) >= 0;
 	}
@@ -107,7 +107,7 @@ public enum Operator
 	 * 
 	 * @return Whether or not this {@code Operator} is an arithmetic operator
 	 */
-	public boolean isArithmeticOperator()
+	public boolean isArithmetic()
 	{
 		return this == ADD || this == SUBTRACT || this == MULTIPLY || this == DIVIDE || this == MODULO;
 	}
@@ -118,7 +118,7 @@ public enum Operator
 	 * 
 	 * @return Whether or not this {@code Operator} is an boolean operator
 	 */
-	public boolean isBooleanOperator()
+	public boolean isBoolean()
 	{
 		return this == AND || this == OR || this == NOT;
 	}
@@ -129,7 +129,7 @@ public enum Operator
 	 * 
 	 * @return Whether or not this {@code Operator} is an arithmetic operator
 	 */
-	public boolean isComparisonOperator()
+	public boolean isComparison()
 	{
 		return this == EQUALS || this == NOTEQUALS || this == LT || this == GT || this == LTE || this == GTE;
 	}

@@ -9,6 +9,8 @@ import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.domainobject.jetlag.core.parser.Operator;
+
 /**
  * @author ayco
  * @created Apr 26, 2015
@@ -56,6 +58,8 @@ public final class Tokenizer {
 			token = new RightParenthesisToken(rule, cursor);
 		else if (c == ',')
 			token = new CommaToken(rule, cursor);
+		else if(Operator.isOperatorStart(c))
+			token = new OperatorToken(rule, cursor);
 		else if(Character.isJavaIdentifierStart(c) && c != '$')
 			token = new WordToken(rule, cursor);
 		else
