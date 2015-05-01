@@ -16,11 +16,7 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  */
 public class WordToken extends Token {
 
-	/**
-	 * @param rule
-	 * @param start
-	 */
-	public WordToken(String rule, int start)
+	WordToken(String rule, int start)
 	{
 		super(rule, start);
 	}
@@ -34,7 +30,7 @@ public class WordToken extends Token {
 
 
 	@Override
-	public void extract() throws TokenExtractionException
+	void extract() throws TokenExtractionException
 	{
 		string = new TokenBuilder(16);
 		end = start;

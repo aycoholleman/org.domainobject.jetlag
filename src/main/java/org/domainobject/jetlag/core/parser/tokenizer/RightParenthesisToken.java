@@ -9,11 +9,7 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  */
 public final class RightParenthesisToken extends Token {
 
-	/**
-	 * @param rule
-	 * @param start
-	 */
-	public RightParenthesisToken(String rule, int start)
+	RightParenthesisToken(String rule, int start)
 	{
 		super(rule, start);
 	}
@@ -27,7 +23,7 @@ public final class RightParenthesisToken extends Token {
 
 
 	@Override
-	public void extract() throws TokenExtractionException
+	void extract() throws TokenExtractionException
 	{
 		string = new TokenBuilder(1);
 		// The cursor (end) now points to the right parenthesis.

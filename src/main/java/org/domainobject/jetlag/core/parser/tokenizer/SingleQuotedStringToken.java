@@ -11,9 +11,9 @@ import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
  * @created Apr 25, 2015
  *
  */
-final class SingleQuotedStringToken extends Token {
+public final class SingleQuotedStringToken extends Token {
 
-	public SingleQuotedStringToken(String rule, int start)
+	SingleQuotedStringToken(String rule, int start)
 	{
 		super(rule, start);
 	}
@@ -27,7 +27,7 @@ final class SingleQuotedStringToken extends Token {
 
 
 	@Override
-	public void extract() throws StringNotTerminatedException
+	void extract() throws StringNotTerminatedException
 	{
 		string = new TokenBuilder(16);
 		end = start;

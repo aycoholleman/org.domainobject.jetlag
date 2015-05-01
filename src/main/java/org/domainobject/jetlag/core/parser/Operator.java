@@ -1,7 +1,6 @@
 package org.domainobject.jetlag.core.parser;
 
 import java.util.Arrays;
-import java.util.EnumSet;
 
 public enum Operator
 {
@@ -19,15 +18,9 @@ public enum Operator
 	// Library namespace operator
 	NAMESPACE("->", null);
 
+	private static final char[] startChars = new char[] { '+', '-', '*', '%', '/', '&', '|', '!', '=', '<', '>', ':' };
 	private static final String[] symbols = new String[Operator.values().length];
 	private static final Operator[] opsAlphabetical = new Operator[Operator.values().length];
-
-	private static final EnumSet<Operator> multicharOps = EnumSet.of(AND, OR, NOTEQUALS, LTE, GTE, NAMESPACE);
-	private static final EnumSet<Operator> arithmeticOps = EnumSet.of(ADD, SUBTRACT, MULTIPLY, DIVIDE, MODULO);
-	private static final EnumSet<Operator> booleanOps = EnumSet.of(AND, OR, NOT);
-	private static final EnumSet<Operator> comparisonOps = EnumSet.of(EQUALS, NOTEQUALS, LT, GT, LTE, GTE);
-
-	private static final char[] startChars = new char[] { '+', '-', '*', '%', '/', '&', '|', '!', '=', '<', '>', ':' };
 
 	static {
 
@@ -43,12 +36,13 @@ public enum Operator
 
 
 	/**
-	 * Look up the {@code Operator} for the specified symbol.
+	 * Look up the {@code Operator} enum value corresponding to the specified
+	 * symbol.
 	 * 
 	 * @param symbol
 	 *            The symbol to look up
-	 * @return The {@code Operator} corresponding to the symbol, or {@code null}
-	 *         if the specified {@code String} is not an operator.
+	 * @return The {@code Operator} or {@code null} if the argument to this
+	 *         method is not a valid operator
 	 */
 	public static Operator forSymbol(String symbol)
 	{
@@ -89,9 +83,9 @@ public enum Operator
 
 
 	/**
-	 * Get the character sequence for this operator
+	 * Get the symbol (i.e. character sequence) for this operator
 	 * 
-	 * @return The character sequence for this operator
+	 * @return The symbol (i.e. character sequence) for this operator
 	 */
 	public String getSymbol()
 	{
@@ -110,4 +104,36 @@ public enum Operator
 		return javaSymbol;
 	}
 
+
+	/**
+	 * Whether or not this {@code Operator} is an arithmetic operator.
+	 * 
+	 * @return Whether or not this {@code Operator} is an arithmetic operator
+	 */
+	public boolean isArithmeticOperator()
+	{
+		return this == ADD || this == SUBTRACT || this == MULTIPLY || this == DIVIDE || this == MODULO;
+	}
+
+
+	/**
+	 * Whether or not this {@code Operator} is a boolean operator.
+	 * 
+	 * @return Whether or not this {@code Operator} is an boolean operator
+	 */
+	public boolean isBooleanOperator()
+	{
+		return this == AND || this == OR || this == NOT;
+	}
+
+
+	/**
+	 * Whether or not this {@code Operator} is a comparison operator.
+	 * 
+	 * @return Whether or not this {@code Operator} is an arithmetic operator
+	 */
+	public boolean isComparisonOperator()
+	{
+		return this == EQUALS || this == NOTEQUALS || this == LT || this == GT || this == LTE || this == GTE;
+	}
 }

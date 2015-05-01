@@ -20,14 +20,14 @@ public abstract class Token {
 
 	/**
 	 * Create a {@code Token} that extracts a token from the specified rule
-	 * starting from the specified position ({@code start})
+	 * starting from the specified position ({@code start}). 
 	 * 
 	 * @param rule
 	 *            The rule to extract the token from
 	 * @param start
 	 *            The string index of the first character of the token
 	 */
-	public Token(String rule, int start)
+	Token(String rule, int start)
 	{
 		this.rule = rule;
 		this.start = start;
@@ -62,7 +62,7 @@ public abstract class Token {
 	 * 
 	 * @throws TokenExtractionException
 	 */
-	public abstract void extract() throws TokenExtractionException;
+	abstract void extract() throws TokenExtractionException;
 
 
 	/**

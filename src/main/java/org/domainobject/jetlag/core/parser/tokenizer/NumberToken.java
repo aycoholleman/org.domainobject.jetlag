@@ -13,14 +13,21 @@ public class NumberToken extends Token {
 	private boolean decimal;
 
 
-	public NumberToken(String rule, int start)
+	NumberToken(String rule, int start)
 	{
 		super(rule, start);
 	}
 
 
 	@Override
-	public void extract() throws TokenExtractionException
+	public TokenType getType()
+	{
+		return TokenType.NUMBER;
+	}
+
+
+	@Override
+	void extract() throws TokenExtractionException
 	{
 		string = new TokenBuilder(8);
 		end = start;
@@ -44,13 +51,6 @@ public class NumberToken extends Token {
 				break;
 			}
 		}
-	}
-
-
-	@Override
-	public TokenType getType()
-	{
-		return TokenType.NUMBER;
 	}
 
 

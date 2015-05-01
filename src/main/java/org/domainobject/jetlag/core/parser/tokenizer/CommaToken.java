@@ -1,8 +1,8 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-final class CommaToken extends Token {
+public final class CommaToken extends Token {
 
-	public CommaToken(String rule, int start)
+	CommaToken(String rule, int start)
 	{
 		super(rule, start);
 	}
@@ -16,7 +16,7 @@ final class CommaToken extends Token {
 
 
 	@Override
-	public void extract() throws TokenExtractionException
+	void extract() throws TokenExtractionException
 	{
 		string = new TokenBuilder(1);
 		// The cursor (end) now points to the comma

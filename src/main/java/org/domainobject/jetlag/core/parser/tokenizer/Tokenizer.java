@@ -53,7 +53,7 @@ public final class Tokenizer {
 		else if (c == '(')
 			token = new LeftParenthesisToken(rule, cursor);
 		else if (c == ')')
-			token = new RightParenthesis(rule, cursor);
+			token = new RightParenthesisToken(rule, cursor);
 		else if (c == ',')
 			token = new CommaToken(rule, cursor);
 		else if(Character.isJavaIdentifierStart(c) && c != '$')

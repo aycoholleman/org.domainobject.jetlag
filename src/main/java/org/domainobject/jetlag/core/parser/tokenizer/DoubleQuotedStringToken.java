@@ -13,7 +13,7 @@ import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
  */
 public final class DoubleQuotedStringToken extends Token {
 
-	public DoubleQuotedStringToken(String rule, int start)
+	DoubleQuotedStringToken(String rule, int start)
 	{
 		super(rule, start);
 	}
@@ -27,7 +27,7 @@ public final class DoubleQuotedStringToken extends Token {
 
 
 	@Override
-	public void extract() throws StringNotTerminatedException
+	void extract() throws StringNotTerminatedException
 	{
 		string = new TokenBuilder(16);
 		end = start;
