@@ -11,17 +11,18 @@ public enum Operator
 	// Boolean operators
 	AND("&&"), OR("||"), NOT("!"),
 	// Comparison operators
-	EQUALS("="), NOTEQUALS("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),
+	EQUALS("=", "=="), NOTEQUALS("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),
 	// String operators
-	STRCONCAT("&"),
+	STRCONCAT("&", "+"),
 	// Assignment operator
-	ASSIGN(":="),
-	// Library operator
-	LIB("->");
+	ASSIGN(":=", "="),
+	// Library namespace operator
+	NAMESPACE("->", null);
 
 	private static final String[] symbols = new String[Operator.values().length];
+	private static final Operator[] opsAlphabetical = new Operator[Operator.values().length];
 
-	private static final EnumSet<Operator> multicharOps = EnumSet.of(AND, OR, NOTEQUALS, LTE, GTE, LIB);
+	private static final EnumSet<Operator> multicharOps = EnumSet.of(AND, OR, NOTEQUALS, LTE, GTE, NAMESPACE);
 	private static final EnumSet<Operator> arithmeticOps = EnumSet.of(ADD, SUBTRACT, MULTIPLY, DIVIDE, MODULO);
 	private static final EnumSet<Operator> booleanOps = EnumSet.of(AND, OR, NOT);
 	private static final EnumSet<Operator> comparisonOps = EnumSet.of(EQUALS, NOTEQUALS, LT, GT, LTE, GTE);
@@ -29,13 +30,30 @@ public enum Operator
 	private static final char[] startChars = new char[] { '+', '-', '*', '%', '/', '&', '|', '!', '=', '<', '>', ':' };
 
 	static {
+
 		Arrays.sort(startChars);
-		
+
 		Operator[] ops = values();
 		for (int i = 0; i < ops.length; ++i) {
 			symbols[i] = ops[i].symbol;
+			opsAlphabetical[i] = ops[i];
 		}
-		
+
+	}
+
+
+	/**
+	 * Look up the {@code Operator} for the specified symbol.
+	 * 
+	 * @param symbol
+	 *            The symbol to look up
+	 * @return The {@code Operator} corresponding to the symbol, or {@code null}
+	 *         if the specified {@code String} is not an operator.
+	 */
+	public static Operator forSymbol(String symbol)
+	{
+		int i = Arrays.binarySearch(symbols, symbol);
+		return i < 0 ? null : opsAlphabetical[i];
 	}
 
 
@@ -47,23 +65,49 @@ public enum Operator
 	 * @return Whether or not the character is the first character of at least
 	 *         one operator
 	 */
-	public static boolean isOperatorCharacter(char c)
+	public static boolean isOperatorStartChar(char c)
 	{
 		return Arrays.binarySearch(startChars, c) >= 0;
 	}
 
 	private final String symbol;
+	private final String javaSymbol;
 
 
 	private Operator(String symbol)
 	{
 		this.symbol = symbol;
+		this.javaSymbol = symbol;
 	}
 
 
+	private Operator(String symbol, String javaSymbol)
+	{
+		this.symbol = symbol;
+		this.javaSymbol = javaSymbol;
+	}
+
+
+	/**
+	 * Get the character sequence for this operator
+	 * 
+	 * @return The character sequence for this operator
+	 */
 	public String getSymbol()
 	{
 		return symbol;
+	}
+
+
+	/**
+	 * Get the Java translation for this operator
+	 * 
+	 * @return The Java translation for this operator, or {@code null} if this
+	 *         operator has no equivalent in Java.
+	 */
+	public String getJavaSymbol()
+	{
+		return javaSymbol;
 	}
 
 }
