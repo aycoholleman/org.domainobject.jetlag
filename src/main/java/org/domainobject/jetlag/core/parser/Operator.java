@@ -5,17 +5,17 @@ import java.util.Arrays;
 public enum Operator
 {
 
-	// Arithmetic operators
+	/* Arithmetic operators */
 	ADD("+"), SUBTRACT("-"), MULTIPLY("*"), DIVIDE("/"), MODULO("%"),
-	// Boolean operators
-	AND("&&"), OR("||"), NOT("!"),
-	// Comparison operators
-	EQUALS("=", "=="), NOTEQUALS("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),
-	// String operators
-	STRCONCAT("&", "+"),
-	// Assignment operator
-	ASSIGN(":=", "="),
-	// Library namespace operator
+	/* Boolean operators */
+	AND("&&"), OR("||"), NOT("!"),	
+	/* Comparison operators */
+	EQUALS("=", "=="), NOTEQUALS("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),	
+	/* String operators */
+	STRCONCAT("&", "+"),	
+	/* Assignment operator */
+	ASSIGN(":=", "="),	
+	/* Library namespace operator */
 	NAMESPACE("->", null);
 
 	private static final char[] startChars = new char[] { '+', '-', '*', '%', '/', '&', '|', '!', '=', '<', '>', ':' };
@@ -23,15 +23,12 @@ public enum Operator
 	private static final Operator[] opsAlphabetical = new Operator[Operator.values().length];
 
 	static {
-
 		Arrays.sort(startChars);
-
 		Operator[] ops = values();
 		for (int i = 0; i < ops.length; ++i) {
 			symbols[i] = ops[i].symbol;
 			opsAlphabetical[i] = ops[i];
 		}
-
 	}
 
 
