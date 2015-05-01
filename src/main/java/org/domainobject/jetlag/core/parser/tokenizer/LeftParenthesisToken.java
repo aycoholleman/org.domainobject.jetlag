@@ -25,11 +25,10 @@ public final class LeftParenthesisToken extends Token {
 	@Override
 	void extract() throws TokenExtractionException
 	{
+		// At this point cursor points to left parenthesis
 		token = new TokenBuilder(1);
-		// The cursor (end) now points to the left parenthesis.
 		token.add('(');
 		end = start + 1;
-		// Move past it
 	}
 
 }
