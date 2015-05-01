@@ -14,13 +14,13 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  * @created Apr 29, 2015
  *
  */
-public class Word extends Token {
+public class WordToken extends Token {
 
 	/**
 	 * @param rule
 	 * @param start
 	 */
-	public Word(String rule, int start)
+	public WordToken(String rule, int start)
 	{
 		super(rule, start);
 	}

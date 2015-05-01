@@ -42,7 +42,7 @@ public final class Tokenizer {
 		Token token = null;
 		switch (c) {
 			case DOUBLE_QUOTE:
-				token = new DoubleQuotedString(rule, cursor);
+				token = new DoubleQuotedStringToken(rule, cursor);
 				break;
 			default:
 				throw new IllegalCharacterException(c, cursor);

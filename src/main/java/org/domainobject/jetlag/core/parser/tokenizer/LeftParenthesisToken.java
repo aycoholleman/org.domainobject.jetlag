@@ -7,13 +7,13 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  * @created Apr 29, 2015
  *
  */
-public final class LeftParenthesis extends Token {
+public final class LeftParenthesisToken extends Token {
 
 	/**
 	 * @param rule
 	 * @param start
 	 */
-	public LeftParenthesis(String rule, int start)
+	public LeftParenthesisToken(String rule, int start)
 	{
 		super(rule, start);
 	}

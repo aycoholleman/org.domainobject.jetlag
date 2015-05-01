@@ -11,9 +11,9 @@ import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
  * @created Apr 25, 2015
  *
  */
-public final class DoubleQuotedString extends Token {
+public final class DoubleQuotedStringToken extends Token {
 
-	public DoubleQuotedString(String rule, int start)
+	public DoubleQuotedStringToken(String rule, int start)
 	{
 		super(rule, start);
 	}

@@ -8,12 +8,12 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  * @created Apr 27, 2015
  *
  */
-public class Number extends Token {
+public class NumberToken extends Token {
 
 	private boolean decimal;
 
 
-	public Number(String rule, int start)
+	public NumberToken(String rule, int start)
 	{
 		super(rule, start);
 	}

@@ -3,7 +3,7 @@ package org.domainobject.jetlag.engine.tokenizer;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.domainobject.jetlag.core.parser.tokenizer.DoubleQuotedString;
+import org.domainobject.jetlag.core.parser.tokenizer.DoubleQuotedStringToken;
 import org.domainobject.jetlag.core.parser.tokenizer.StringNotTerminatedException;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class DoubleQuotedStringTest {
 
 	/**
 	 * Test method for
-	 * {@link org.domainobject.jetlag.core.parser.tokenizer.DoubleQuotedString#extract()}
+	 * {@link org.domainobject.jetlag.core.parser.tokenizer.DoubleQuotedStringToken#extract()}
 	 * .
 	 */
 	@Test
@@ -28,7 +28,7 @@ public class DoubleQuotedStringTest {
 		 * Rule starts with double quoted string.
 		 */
 		String rule = String.format("\"%s\"FOO", token);
-		DoubleQuotedString dqs = new DoubleQuotedString(rule, 0);
+		DoubleQuotedStringToken dqs = new DoubleQuotedStringToken(rule, 0);
 		try {
 			dqs.extract();
 			assertTrue(dqs.get() != null);
@@ -42,7 +42,7 @@ public class DoubleQuotedStringTest {
 		 * Rule starts with double quoted string.
 		 */
 		rule = String.format("\"%s\" FOO", token);
-		dqs = new DoubleQuotedString(rule, 0);
+		dqs = new DoubleQuotedStringToken(rule, 0);
 		try {
 			dqs.extract();
 			assertTrue(dqs.get() != null);
@@ -53,7 +53,7 @@ public class DoubleQuotedStringTest {
 		}
 
 		rule = String.format("\"%s\"\" FOO", token);
-		dqs = new DoubleQuotedString(rule, 0);
+		dqs = new DoubleQuotedStringToken(rule, 0);
 		try {
 			dqs.extract();
 			assertTrue(dqs.get() != null);
@@ -67,7 +67,7 @@ public class DoubleQuotedStringTest {
 		 * Rule ends with double quoted string.
 		 */
 		rule = String.format("FOO\"%s\"", token);
-		dqs = new DoubleQuotedString(rule, 3);
+		dqs = new DoubleQuotedStringToken(rule, 3);
 		try {
 			dqs.extract();
 			assertTrue(dqs.get() != null);
@@ -83,7 +83,7 @@ public class DoubleQuotedStringTest {
 		token = "";
 
 		rule = String.format("FOO\"%s\"BAR", token);
-		dqs = new DoubleQuotedString(rule, 3);
+		dqs = new DoubleQuotedStringToken(rule, 3);
 		try {
 			dqs.extract();
 			assertTrue(dqs.get() != null);
