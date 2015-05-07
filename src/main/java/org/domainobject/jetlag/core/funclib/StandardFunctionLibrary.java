@@ -7,6 +7,7 @@ import org.domainobject.jetlag.core.runtime.CallInfo;
  * @created May 7, 2015
  *
  */
+@Library(namespace="std")
 public class StandardFunctionLibrary extends AbstractFunctionLibrary {
 
 	public StandardFunctionLibrary()

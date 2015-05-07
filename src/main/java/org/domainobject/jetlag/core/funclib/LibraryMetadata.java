@@ -5,9 +5,9 @@ package org.domainobject.jetlag.core.funclib;
  * @created May 7, 2015
  *
  */
-public final class LibraryMetadata {
+public final class LibraryMetadata<T extends AbstractFunctionLibrary> {
 
-	private Class<? extends AbstractFunctionLibrary> libraryClass;
+	private Class<T> libraryClass;
 	private String namespace;
 	private String description;
 	private FunctionMetadata[] functions;
@@ -19,7 +19,7 @@ public final class LibraryMetadata {
 	}
 
 
-	public void setLibraryClass(Class<? extends AbstractFunctionLibrary> libraryClass)
+	public void setLibraryClass(Class<T> libraryClass)
 	{
 		this.libraryClass = libraryClass;
 	}

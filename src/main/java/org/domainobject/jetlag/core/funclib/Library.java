@@ -5,6 +5,8 @@ package org.domainobject.jetlag.core.funclib;
  * @created May 7, 2015
  *
  */
-public final class ArgumentMetadata {
+public @interface Library {
+	
+	String namespace();
 
 }
