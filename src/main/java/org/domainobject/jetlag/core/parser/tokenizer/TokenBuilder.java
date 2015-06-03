@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 /**
  * A seriously dressed-down {@link StringBuilder}, capable only of appending
- * characters, and with some knowledge of what tokens are like (e.g. average
- * length).
+ * characters, and with some extra knowledge of what tokens are like (e.g.
+ * average length).
  * 
  * @author ayco
  * @created Apr 25, 2015
