@@ -1,124 +1,103 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.APOSTROPHE;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.CR;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.DOUBLE_QUOTE;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.LF;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import org.domainobject.jetlag.core.parser.Operator;
 
 /**
  * @author ayco
- * @created Apr 26, 2015
+ * @created 3 jun. 2015
  *
  */
 public final class Tokenizer {
 
-	private final String rule;
-	private int cursor;
+	private final TokenProducer tokenProducer;
+
+	private ArrayList<Token> tokens;
+	private int current;
+	private int last;
 
 
 	public Tokenizer(String rule)
 	{
-		this.rule = rule;
+		this.tokenProducer = new TokenProducer(rule);
 	}
 
 
-	public List<Token> getAllTokens() throws TokenizerException
+	public boolean hasMoreTokens()
 	{
-		ArrayList<Token> tokens = new ArrayList<>();
-		while (hasMoreTokens()) {
-			tokens.add(nextToken());
+		return tokenProducer.hasMoreTokens();
+	}
+
+
+	public Token currentToken()
+	{
+		return tokens == null ? null : tokens.get(current);
+	}
+
+
+	public Token nextToken() throws IllegalCharacterException, TokenExtractionException
+	{
+		if (current < last) {
+			return tokens.get(++current);
 		}
-		return tokens;
-	}
-
-
-	private Token nextToken() throws IllegalCharacterException, TokenExtractionException
-	{
-		skipWhitespace();
-		char c = curchar();
-		if (c == NIL) {
+		Token token = tokenProducer.nextToken();
+		if (token == null) {
 			return null;
 		}
-		Token token = null;
-		if (c == DOUBLE_QUOTE)
-			token = new DoubleQuotedStringToken(rule, cursor);
-		else if (c == APOSTROPHE)
-			token = new SingleQuotedStringToken(rule, cursor);
-		else if (Character.isDigit(c) || c == '.')
-			token = new NumberToken(rule, cursor);
-		else if (c == '(')
-			token = new LeftParenthesisToken(rule, cursor);
-		else if (c == ')')
-			token = new RightParenthesisToken(rule, cursor);
-		else if (c == ',')
-			token = new CommaToken(rule, cursor);
-		else if(Operator.isOperatorStart(c))
-			token = new OperatorToken(rule, cursor);
-		else if(Character.isJavaIdentifierStart(c) && c != '$')
-			token = new WordToken(rule, cursor);
-		else
-			throw new IllegalCharacterException(c, cursor);
-
-		token.extract();
-		cursor = token.end();
+		if (tokens == null) {
+			tokens = new ArrayList<>();
+		}
+		tokens.add(token);
+		++current;
+		++last;
 		return token;
 	}
 
 
-	private boolean hasMoreTokens()
+	public Token peek() throws IllegalCharacterException, TokenExtractionException
 	{
-		skipWhitespace();
-		return curchar() != NIL;
-	}
-
-
-	/*
-	 * Skip whitespace
-	 */
-	private void skipWhitespace()
-	{
-		char c = curchar();
-		while (true) {
-			if (c == '#' && (cursor == 0 || prevchar() == LF || prevchar() == CR)) {
-				do {
-					c = advance();
-				} while (c != NIL && c != LF && c != CR);
-				skipWhitespace();
-			}
-			else if (Character.isWhitespace(c)) {
-				c = advance();
-			}
-			else if (Character.isISOControl(c)) {
-				c = advance();
-			}
-			else {
-				break;
-			}
+		if (current + 1 < last) {
+			return tokens.get(current + 1);
 		}
+		Token token = tokenProducer.nextToken();
+		if (token == null) {
+			return null;
+		}
+		if (tokens == null) {
+			tokens = new ArrayList<>();
+		}
+		tokens.add(token);
+		++last;
+		return token;
 	}
 
 
-	private char curchar()
+	public Token peek(int ahead) throws IllegalCharacterException, TokenExtractionException
 	{
-		return cursor == rule.length() ? NIL : rule.charAt(cursor);
-	}
-
-
-	private char prevchar()
-	{
-		return rule.charAt(cursor - 1);
-	}
-
-
-	private char advance()
-	{
-		return cursor + 1 == rule.length() ? NIL : rule.charAt(++cursor);
+		if (ahead == 0) {
+			return currentToken();
+		}
+		if (ahead < 0) {
+			if (tokens == null || current + ahead < 0) {
+				return null;
+			}
+			return tokens.get(current + ahead);
+		}
+		if (current + ahead < last) {
+			return tokens.get(current + ahead);
+		}
+		Token token = null;
+		for (int i = 0; i < (last - (current + ahead)); ++i) {
+			token = tokenProducer.nextToken();
+			if (token == null) {
+				return null;
+			}
+			if (tokens == null) {
+				tokens = new ArrayList<>();
+			}
+			tokens.add(token);
+			++last;
+		}
+		return token;
 	}
 
 }
