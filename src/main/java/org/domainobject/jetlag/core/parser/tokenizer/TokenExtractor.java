@@ -104,7 +104,7 @@ class TokenExtractor {
 
 	private char advance()
 	{
-		return cursor + 1 == rule.length() ? NIL : rule.charAt(++cursor);
+		return cursor + 2 == rule.length() ? NIL : rule.charAt(++cursor);
 	}
 
 }

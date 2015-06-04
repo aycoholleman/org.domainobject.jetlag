@@ -20,7 +20,7 @@ public abstract class Token {
 
 	/**
 	 * Create a {@code Token} that extracts a token from the specified rule
-	 * starting from the specified position ({@code start}). 
+	 * starting from the specified position ({@code start}).
 	 * 
 	 * @param rule
 	 *            The rule to extract the token from
@@ -54,10 +54,10 @@ public abstract class Token {
 	 * of the token.
 	 * </ol>
 	 * Subclasses can and must assume that the {@link start} field contains the
-	 * index of the first character of the token. E.g. for a single quoted
-	 * token {@code start} is the position of the opening quote. After the
-	 * extract method completes, {@code cursor} must be the index <i>after</i>
-	 * the closing quote.
+	 * index of the first character of the token. E.g. for a single quoted token
+	 * {@code start} is the position of the opening quote. After the extract
+	 * method completes, {@code cursor} must be the index <i>after</i> the
+	 * closing quote.
 	 * 
 	 * 
 	 * @throws TokenExtractionException
@@ -89,11 +89,11 @@ public abstract class Token {
 
 
 	/**
-	 * Get the token extracted from the rule by this {@code Token} instance
+	 * Get the {@code String} extracted by this {@code Token} instance
 	 * 
-	 * @return The {@code String} extracted from the rule by this {@code Token}
+	 * @return The {@code String} extracted by this {@code Token}
 	 */
-	public String get()
+	public String string()
 	{
 		if (token == null) {
 			throw new IllegalStateException("Token not extracted yet");
@@ -103,14 +103,14 @@ public abstract class Token {
 
 
 	/**
-	 * Equivalent to calling {@link #get()}.
+	 * Equivalent to calling {@link #string()}.
 	 * 
 	 * @return The {@code String} representation of this token
 	 */
 	@Override
 	public String toString()
 	{
-		return get();
+		return string();
 	}
 
 

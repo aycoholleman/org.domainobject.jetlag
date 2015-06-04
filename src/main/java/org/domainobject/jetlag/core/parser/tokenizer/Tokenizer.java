@@ -35,7 +35,8 @@ public final class Tokenizer {
 
 
 	/**
-	 * Get
+	 * Get the current token in the rule.
+	 * 
 	 * @return
 	 */
 	public Token currentToken()

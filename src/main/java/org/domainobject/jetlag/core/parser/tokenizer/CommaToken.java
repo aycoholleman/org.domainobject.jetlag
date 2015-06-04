@@ -20,7 +20,7 @@ public final class CommaToken extends Token {
 	{
 		token = new TokenBuilder(1);
 		// The cursor (end) now points to the comma
-		token.add('(');
+		token.add(',');
 		// Move cursor past token
 		end = start + 1;
 	}

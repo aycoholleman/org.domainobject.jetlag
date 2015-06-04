@@ -27,7 +27,7 @@ public final class RightParenthesisToken extends Token {
 	{
 		token = new TokenBuilder(1);
 		// The cursor (end) now points to the right parenthesis.
-		token.add('(');
+		token.add(')');
 		end = start + 1;
 		// Move past it
 	}

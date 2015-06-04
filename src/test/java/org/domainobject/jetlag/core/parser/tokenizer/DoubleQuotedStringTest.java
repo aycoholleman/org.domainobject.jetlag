@@ -31,8 +31,8 @@ public class DoubleQuotedStringTest {
 		DoubleQuotedStringToken dqs = new DoubleQuotedStringToken(rule, 0);
 		try {
 			dqs.extract();
-			assertTrue(dqs.get() != null);
-			assertTrue(dqs.get().equals(token));
+			assertTrue(dqs.string() != null);
+			assertTrue(dqs.string().equals(token));
 		}
 		catch (StringNotTerminatedException e) {
 			fail("StringNotTerminatedException not expected");
@@ -45,8 +45,8 @@ public class DoubleQuotedStringTest {
 		dqs = new DoubleQuotedStringToken(rule, 0);
 		try {
 			dqs.extract();
-			assertTrue(dqs.get() != null);
-			assertTrue(dqs.get().equals(token));
+			assertTrue(dqs.string() != null);
+			assertTrue(dqs.string().equals(token));
 		}
 		catch (StringNotTerminatedException e) {
 			fail("StringNotTerminatedException not expected");
@@ -56,8 +56,8 @@ public class DoubleQuotedStringTest {
 		dqs = new DoubleQuotedStringToken(rule, 0);
 		try {
 			dqs.extract();
-			assertTrue(dqs.get() != null);
-			assertTrue(dqs.get().equals(token));
+			assertTrue(dqs.string() != null);
+			assertTrue(dqs.string().equals(token));
 		}
 		catch (StringNotTerminatedException e) {
 			fail("StringNotTerminatedException not expected");
@@ -70,8 +70,8 @@ public class DoubleQuotedStringTest {
 		dqs = new DoubleQuotedStringToken(rule, 3);
 		try {
 			dqs.extract();
-			assertTrue(dqs.get() != null);
-			assertTrue(dqs.get().equals(token));
+			assertTrue(dqs.string() != null);
+			assertTrue(dqs.string().equals(token));
 		}
 		catch (StringNotTerminatedException e) {
 			fail("StringNotTerminatedException not expected");
@@ -86,8 +86,8 @@ public class DoubleQuotedStringTest {
 		dqs = new DoubleQuotedStringToken(rule, 3);
 		try {
 			dqs.extract();
-			assertTrue(dqs.get() != null);
-			assertTrue(dqs.get().equals(token));
+			assertTrue(dqs.string() != null);
+			assertTrue(dqs.string().equals(token));
 		}
 		catch (StringNotTerminatedException e) {
 			fail("StringNotTerminatedException not expected");
