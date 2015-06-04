@@ -9,17 +9,19 @@ import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
 import org.domainobject.jetlag.core.parser.Operator;
 
 /**
+ * Identifies and extracts tokens from a rule.
+ * 
  * @author ayco
  * @created Apr 26, 2015
  *
  */
-final class TokenProducer {
+class TokenExtractor {
 
 	private final String rule;
 	private int cursor;
 
 
-	TokenProducer(String rule)
+	TokenExtractor(String rule)
 	{
 		this.rule = rule;
 	}
@@ -45,9 +47,9 @@ final class TokenProducer {
 			token = new RightParenthesisToken(rule, cursor);
 		else if (c == ',')
 			token = new CommaToken(rule, cursor);
-		else if(Operator.isOperatorStart(c))
+		else if (Operator.isOperatorStart(c))
 			token = new OperatorToken(rule, cursor);
-		else if(Character.isJavaIdentifierStart(c) && c != '$')
+		else if (Character.isJavaIdentifierStart(c) && c != '$')
 			token = new WordToken(rule, cursor);
 		else
 			throw new IllegalCharacterException(c, cursor);
@@ -64,13 +66,11 @@ final class TokenProducer {
 	}
 
 
-	/*
-	 * Skip whitespace
-	 */
 	private void skipWhitespace()
 	{
 		char c = curchar();
 		while (true) {
+			// Skip comments
 			if (c == '#' && (cursor == 0 || prevchar() == LF || prevchar() == CR)) {
 				do {
 					c = advance();

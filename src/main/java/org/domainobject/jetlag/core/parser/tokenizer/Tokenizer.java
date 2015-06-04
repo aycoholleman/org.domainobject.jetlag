@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public final class Tokenizer {
 
-	private final TokenProducer tokenProducer;
+	private final TokenExtractor tokenExtractor;
 
 	private ArrayList<Token> tokens;
 	private int current;
@@ -18,16 +18,26 @@ public final class Tokenizer {
 
 	public Tokenizer(String rule)
 	{
-		this.tokenProducer = new TokenProducer(rule);
+		this.tokenExtractor = new TokenExtractor(rule);
 	}
 
 
+	/**
+	 * Are there more tokens to be extracted from the rule?
+	 * 
+	 * @return {@code false} if there is nothing left but whitespace in the
+	 *         rule; {@code true} otherwise
+	 */
 	public boolean hasMoreTokens()
 	{
-		return tokenProducer.hasMoreTokens();
+		return tokenExtractor.hasMoreTokens();
 	}
 
 
+	/**
+	 * Get
+	 * @return
+	 */
 	public Token currentToken()
 	{
 		return tokens == null ? null : tokens.get(current);
@@ -39,7 +49,7 @@ public final class Tokenizer {
 		if (current < last) {
 			return tokens.get(++current);
 		}
-		Token token = tokenProducer.nextToken();
+		Token token = tokenExtractor.nextToken();
 		if (token == null) {
 			return null;
 		}
@@ -58,7 +68,7 @@ public final class Tokenizer {
 		if (current + 1 < last) {
 			return tokens.get(current + 1);
 		}
-		Token token = tokenProducer.nextToken();
+		Token token = tokenExtractor.nextToken();
 		if (token == null) {
 			return null;
 		}
@@ -87,7 +97,7 @@ public final class Tokenizer {
 		}
 		Token token = null;
 		for (int i = 0; i < (last - (current + ahead)); ++i) {
-			token = tokenProducer.nextToken();
+			token = tokenExtractor.nextToken();
 			if (token == null) {
 				return null;
 			}
