@@ -21,7 +21,7 @@ public final class IllegalCharacterException extends TokenizerException {
 
 	public IllegalCharacterException(char c, int position)
 	{
-		super(String.format("Illegal character at position %s: \"%s\" (%s)", c, position, unicode(c)));
+		super(String.format("Illegal character at position %s: \"%s\" (%s)", position, c, unicode(c)));
 		this.character = c;
 		this.position = position;
 	}

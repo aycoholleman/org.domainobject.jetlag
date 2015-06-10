@@ -12,8 +12,7 @@ public final class Tokenizer {
 	private final TokenExtractor tokenExtractor;
 
 	private ArrayList<Token> tokens;
-	private int current;
-	private int last;
+	private int current = -1;
 
 
 	public Tokenizer(String rule)
@@ -45,68 +44,92 @@ public final class Tokenizer {
 	}
 
 
+	/**
+	 * Retrieve the next token from the token stream.
+	 * 
+	 * @return
+	 * @throws IllegalCharacterException
+	 * @throws TokenExtractionException
+	 */
 	public Token nextToken() throws IllegalCharacterException, TokenExtractionException
 	{
-		if (current < last) {
-			return tokens.get(++current);
-		}
-		Token token = tokenExtractor.nextToken();
-		if (token == null) {
-			return null;
-		}
+		Token token;
 		if (tokens == null) {
-			tokens = new ArrayList<>();
+			token = tokenExtractor.nextToken();
+			if (token != null) {
+				++current;
+				tokens = new ArrayList<>();
+				tokens.add(token);
+			}
 		}
-		tokens.add(token);
-		++current;
-		++last;
+		else if (current + 1 < tokens.size()) {
+			token = tokens.get(++current);
+		}
+		else {
+			token = tokenExtractor.nextToken();
+			if (token != null) {
+				++current;
+				tokens.add(token);
+			}
+		}
 		return token;
 	}
 
 
 	public Token peek() throws IllegalCharacterException, TokenExtractionException
 	{
-		if (current + 1 < last) {
-			return tokens.get(current + 1);
-		}
-		Token token = tokenExtractor.nextToken();
-		if (token == null) {
-			return null;
-		}
+		Token token;
 		if (tokens == null) {
-			tokens = new ArrayList<>();
+			token = tokenExtractor.nextToken();
+			if (token != null) {
+				tokens = new ArrayList<>();
+				tokens.add(token);
+			}
 		}
-		tokens.add(token);
-		++last;
+		else if (current + 1 < tokens.size()) {
+			token = tokens.get(current + 1);
+		}
+		else {
+			token = tokenExtractor.nextToken();
+			if (token != null) {
+				tokens.add(token);
+			}
+		}
 		return token;
 	}
 
 
 	public Token peek(int ahead) throws IllegalCharacterException, TokenExtractionException
 	{
-		if (ahead == 0) {
-			return currentToken();
-		}
-		if (ahead < 0) {
-			if (tokens == null || current + ahead < 0) {
-				return null;
-			}
-			return tokens.get(current + ahead);
-		}
-		if (current + ahead < last) {
-			return tokens.get(current + ahead);
+		if (ahead < 1) {
+			throw new IllegalArgumentException("Argument must be greater than 0");
 		}
 		Token token = null;
-		for (int i = 0; i < (last - (current + ahead)); ++i) {
+		if (tokens == null) {
 			token = tokenExtractor.nextToken();
-			if (token == null) {
-				return null;
-			}
-			if (tokens == null) {
+			if (token != null) {
 				tokens = new ArrayList<>();
+				tokens.add(token);
+				while (--ahead != 0) {
+					token = tokenExtractor.nextToken();
+					if (token == null) {
+						break;
+					}
+					tokens.add(token);
+				}
 			}
-			tokens.add(token);
-			++last;
+		}
+		else if (current + ahead < tokens.size()) {
+			token = tokens.get(current + ahead);
+		}
+		else {
+			while (tokens.size() < (current + ahead)) {
+				token = tokenExtractor.nextToken();
+				if (token == null) {
+					break;
+				}
+				tokens.add(token);
+			}
 		}
 		return token;
 	}

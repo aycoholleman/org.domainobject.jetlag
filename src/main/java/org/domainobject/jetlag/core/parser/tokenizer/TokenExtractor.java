@@ -20,6 +20,9 @@ class TokenExtractor {
 	private final String rule;
 	private int cursor;
 
+	private int line;
+	private int column;
+
 
 	TokenExtractor(String rule)
 	{
@@ -70,14 +73,7 @@ class TokenExtractor {
 	{
 		char c = curchar();
 		while (true) {
-			// Skip comments
-			if (c == '#' && (cursor == 0 || prevchar() == LF || prevchar() == CR)) {
-				do {
-					c = advance();
-				} while (c != NIL && c != LF && c != CR);
-				skipWhitespace();
-			}
-			else if (Character.isWhitespace(c)) {
+			if (Character.isWhitespace(c)) {
 				c = advance();
 			}
 			else if (Character.isISOControl(c)) {
@@ -87,6 +83,25 @@ class TokenExtractor {
 				break;
 			}
 		}
+		//		char c = curchar();
+		//		while (c != NIL) {
+		//			// Skip comments
+		//			if (c == '#' && (cursor == 0 || prevchar() == LF || prevchar() == CR)) {
+		//				do {
+		//					c = advance();
+		//				} while (c != NIL && c != LF && c != CR);
+		//				skipWhitespace();
+		//			}
+		//			else if (Character.isWhitespace(c)) {
+		//				c = advance();
+		//			}
+		//			else if (Character.isISOControl(c)) {
+		//				c = advance();
+		//			}
+		//			else {
+		//				break;
+		//			}
+		//		}
 	}
 
 
@@ -104,7 +119,26 @@ class TokenExtractor {
 
 	private char advance()
 	{
-		return cursor + 2 == rule.length() ? NIL : rule.charAt(++cursor);
+		if (++cursor == rule.length()) {
+			return NIL;
+		}
+		char c = rule.charAt(cursor);
+		if (c == CR) {
+			++line;
+			column = 0;
+			// Handle <CR><LF> sequence
+			if (cursor + 1 != rule.length() && rule.charAt(cursor + 1) == LF) {
+				++cursor;
+			}
+		}
+		else if (c == LF) {
+			++line;
+			column = 0;
+		}
+		else {
+			++column;
+		}
+		return c;
 	}
 
 }
