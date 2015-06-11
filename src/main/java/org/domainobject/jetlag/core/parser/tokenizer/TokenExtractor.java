@@ -1,10 +1,10 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.APOSTROPHE;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.CR;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.DOUBLE_QUOTE;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.LF;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.APOSTROPHE;
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.CR;
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.DOUBLE_QUOTE;
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.LF;
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.NIL;
 
 import org.domainobject.jetlag.core.parser.Operator;
 
@@ -65,22 +65,29 @@ class TokenExtractor {
 	private void skipWhitespace()
 	{
 		while (true) {
-			if (Character.isWhitespace(cursor.at())) {
+			if (Character.isWhitespace(cursor.at()))
 				cursor.forward();
-			}
-			else if (Character.isISOControl(cursor.at())) {
+			else if (Character.isISOControl(cursor.at()) && !cursor.at(NIL))
 				cursor.forward();
-			}
-			else if (cursor.at('#') && (cursor.position() == 0 || cursor.prev() == LF || cursor.prev() == CR)) {
-				// Skip comments
+			else if (isCommentStart())
 				do {
 					cursor.forward();
-				} while (!cursor.at(NIL) && !cursor.at(LF) && !cursor.at(CR));
-			}
-			else {
+				} while (!isCommentEnd());
+			else
 				break;
-			}
 		}
+	}
+
+
+	private boolean isCommentStart()
+	{
+		return cursor.at('#') && (cursor.position() == 0 || cursor.prev() == LF || cursor.prev() == CR);
+	}
+
+
+	private boolean isCommentEnd()
+	{
+		return cursor.at(NIL) || cursor.at(LF) || cursor.at(CR);
 	}
 
 }

@@ -12,14 +12,6 @@ import java.util.Arrays;
  */
 class TokenBuilder {
 
-	static final char NIL = 0x00;
-	static final char BACKSLASH = 0x5C;
-	static final char DOUBLE_QUOTE = 0x22;
-	static final char APOSTROPHE = 0x27;
-	static final char LF = 0x0A;
-	static final char CR = 0x0D;
-	static final char TAB = 0x09;
-
 	private char[] value;
 	private int count;
 

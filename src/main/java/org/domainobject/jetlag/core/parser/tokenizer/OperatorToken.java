@@ -1,7 +1,5 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
-
 import org.domainobject.jetlag.core.parser.Operator;
 
 /**
@@ -39,7 +37,7 @@ public final class OperatorToken extends Token {
 		char c0 = cursor.at();
 		char c1 = cursor.forward();
 		String token;
-		if (c1 == NIL) {
+		if (c1 == Cursor.NIL) {
 			token = String.valueOf(c0);
 			operator = Operator.forSymbol(token);
 		}

@@ -1,8 +1,8 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.BACKSLASH;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.DOUBLE_QUOTE;
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.BACKSLASH;
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.DOUBLE_QUOTE;
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.NIL;
 
 /**
  * {@link Token} subclass for extracting double quoted strings.
