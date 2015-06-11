@@ -1,6 +1,5 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-
 /**
  * Class that scrolls along the characters of a {@code String} while keeping
  * track of line numbers and columns.
@@ -11,25 +10,25 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  */
 class Cursor {
 
-	static final char TAB = 0x09;
-	static final char CR = 0x0D;
-	static final char LF = 0x0A;
-	static final char APOSTROPHE = 0x27;
-	static final char DOUBLE_QUOTE = 0x22;
-	static final char BACKSLASH = 0x5C;
 	static final char NIL = 0x00;
-
+	static final char TAB = 0x09;
+	static final char LF = 0x0A;
+	static final char CR = 0x0D;
+	static final char DOUBLE_QUOTE = 0x22;
+	static final char APOSTROPHE = 0x27;
+	static final char BACKSLASH = 0x5C;
 
 	private String rule;
 	private int pos;
 	private int line;
 	private int col;
 	private char curr;
-	
+
+
 	Cursor(String rule)
 	{
 		this.rule = rule;
-		this.curr = rule.length() == 0 ? Cursor.NIL : rule.charAt(0);
+		this.curr = rule.length() == 0 ? NIL : rule.charAt(0);
 	}
 
 
@@ -56,7 +55,7 @@ class Cursor {
 	 */
 	char prev()
 	{
-		return pos == 0 ? Cursor.NIL : rule.charAt(pos - 1);
+		return pos == 0 ? NIL : rule.charAt(pos - 1);
 	}
 
 
@@ -65,7 +64,7 @@ class Cursor {
 	 */
 	char peek()
 	{
-		return (curr == Cursor.NIL || pos + 1 == rule.length()) ? Cursor.NIL : rule.charAt(pos + 1);
+		return (curr == NIL || pos + 1 == rule.length()) ? NIL : rule.charAt(pos + 1);
 	}
 
 
@@ -74,19 +73,19 @@ class Cursor {
 	 */
 	char forward()
 	{
-		if (curr == Cursor.NIL) {
-			return Cursor.NIL;
+		if (curr == NIL) {
+			return NIL;
 		}
 		if (++pos == rule.length()) {
-			return (curr = Cursor.NIL);
+			return (curr = NIL);
 		}
 		curr = rule.charAt(pos);
-		if (curr == Cursor.CR) {
+		if (curr == CR) {
 			++line;
 			col = 0;
 		}
-		else if (curr == Cursor.LF) {
-			if (prev() != Cursor.CR) {
+		else if (curr == LF) {
+			if (prev() != CR) {
 				++line;
 				col = 0;
 			}
