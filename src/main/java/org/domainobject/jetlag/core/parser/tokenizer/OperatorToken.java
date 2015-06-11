@@ -14,9 +14,9 @@ public final class OperatorToken extends Token {
 	private Operator operator;
 
 
-	OperatorToken(String rule, int start)
+	OperatorToken(Cursor cursor)
 	{
-		super(rule, start);
+		super(cursor);
 	}
 
 
@@ -34,34 +34,29 @@ public final class OperatorToken extends Token {
 
 
 	@Override
-	void extract() throws TokenExtractionException
+	String doExtract() throws TokenExtractionException
 	{
-		end = start;
-		char c0 = curchar();
-		char c1 = advance();
+		char c0 = cursor.at();
+		char c1 = cursor.forward();
+		String token;
 		if (c1 == NIL) {
-			token = new TokenBuilder(1);
-			token.add(c0);
-			operator = Operator.forSymbol(String.valueOf(c0));
+			token = String.valueOf(c0);
+			operator = Operator.forSymbol(token);
 		}
 		else {
-			operator = Operator.forSymbol(String.valueOf(new char[] { c0, c1 }));
+			token = String.valueOf(new char[] { c0, c1 });
+			operator = Operator.forSymbol(token);
 			if (operator == null) {
 				// We have a one-character operator
-				token = new TokenBuilder(1);
-				token.add(c0);
-				operator = Operator.forSymbol(String.valueOf(c0));
-				// We have already advanced past the one and only
-				// character (no need to increment cursor)
+				token = String.valueOf(c0);
+				operator = Operator.forSymbol(token);
 			}
 			else {
-				// We have a two-character operator
-				token = new TokenBuilder(2);
-				token.add(c0, c1);
-				// Move past 2nd character
-				++end;
+				// We have a two-character operator; move past 2nd character
+				cursor.forward();
 			}
 		}
+		return token.toString();
 	}
 
 }

@@ -8,34 +8,32 @@ package org.domainobject.jetlag.core.parser.tokenizer;
 public final class IllegalCharacterException extends TokenizerException {
 
 	private static final long serialVersionUID = 7232148208222647685L;
+	private static final String MESSAGE_TEMPLATE = "Illegal character at position %s (line %s, column %s): '%s' (%s)";
 
 
-	private static String unicode(char c)
+	private static String createMessage(Cursor cursor)
 	{
-		return "\\u" + Integer.toHexString(c | 0x10000).substring(1);
+		int pos = cursor.position();
+		int line = cursor.line();
+		int col = cursor.column();
+		char c = cursor.at();
+		String unicode = "\\u" + Integer.toHexString(c | 0x10000).substring(1);
+		return String.format(MESSAGE_TEMPLATE, pos, line, col, c, unicode);
 	}
 
-	private final char character;
-	private final int position;
+	private final Cursor cursor;
 
 
-	public IllegalCharacterException(char c, int position)
+	public IllegalCharacterException(Cursor cursor)
 	{
-		super(String.format("Illegal character at position %s: \"%s\" (%s)", position, c, unicode(c)));
-		this.character = c;
-		this.position = position;
+		super(createMessage(cursor));
+		this.cursor = cursor;
 	}
 
 
-	public char getCharacter()
+	public Cursor getCursor()
 	{
-		return character;
-	}
-
-
-	public int getPosition()
-	{
-		return position;
+		return cursor;
 	}
 
 }

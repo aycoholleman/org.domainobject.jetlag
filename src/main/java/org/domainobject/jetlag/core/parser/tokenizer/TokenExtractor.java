@@ -17,47 +17,40 @@ import org.domainobject.jetlag.core.parser.Operator;
  */
 class TokenExtractor {
 
-	private final String rule;
-	private int cursor;
-
-	private int line;
-	private int column;
+	private final Cursor cursor;
 
 
 	TokenExtractor(String rule)
 	{
-		this.rule = rule;
+		this.cursor = new Cursor(rule);
 	}
 
 
 	Token nextToken() throws IllegalCharacterException, TokenExtractionException
 	{
 		skipWhitespace();
-		char c = curchar();
-		if (c == NIL) {
-			return null;
-		}
 		Token token = null;
-		if (c == DOUBLE_QUOTE)
-			token = new DoubleQuotedStringToken(rule, cursor);
-		else if (c == APOSTROPHE)
-			token = new SingleQuotedStringToken(rule, cursor);
-		else if (Character.isDigit(c) || c == '.')
-			token = new NumberToken(rule, cursor);
-		else if (c == '(')
-			token = new LeftParenthesisToken(rule, cursor);
-		else if (c == ')')
-			token = new RightParenthesisToken(rule, cursor);
-		else if (c == ',')
-			token = new CommaToken(rule, cursor);
-		else if (Operator.isOperatorStart(c))
-			token = new OperatorToken(rule, cursor);
-		else if (Character.isJavaIdentifierStart(c) && c != '$')
-			token = new WordToken(rule, cursor);
+		if (cursor.at(NIL))
+			return null;
+		if (cursor.at(DOUBLE_QUOTE))
+			token = new DoubleQuotedStringToken(cursor);
+		else if (cursor.at(APOSTROPHE))
+			token = new SingleQuotedStringToken(cursor);
+		else if (NumberToken.isNumberStart(cursor.at()))
+			token = new NumberToken(cursor);
+		else if (cursor.at('('))
+			token = new LeftParenthesisToken(cursor);
+		else if (cursor.at(')'))
+			token = new RightParenthesisToken(cursor);
+		else if (cursor.at(','))
+			token = new CommaToken(cursor);
+		else if (Operator.isOperatorStart(cursor.at()))
+			token = new OperatorToken(cursor);
+		else if (Character.isJavaIdentifierStart(cursor.at()) && !cursor.at('$'))
+			token = new WordToken(cursor);
 		else
-			throw new IllegalCharacterException(c, cursor);
+			throw new IllegalCharacterException(cursor.copy());
 		token.extract();
-		cursor = token.end();
 		return token;
 	}
 
@@ -65,80 +58,29 @@ class TokenExtractor {
 	boolean hasMoreTokens()
 	{
 		skipWhitespace();
-		return curchar() != NIL;
+		return !cursor.at(NIL);
 	}
 
 
 	private void skipWhitespace()
 	{
-		char c = curchar();
 		while (true) {
-			if (Character.isWhitespace(c)) {
-				c = advance();
+			if (Character.isWhitespace(cursor.at())) {
+				cursor.forward();
 			}
-			else if (Character.isISOControl(c)) {
-				c = advance();
+			else if (Character.isISOControl(cursor.at())) {
+				cursor.forward();
+			}
+			else if (cursor.at('#') && (cursor.position() == 0 || cursor.prev() == LF || cursor.prev() == CR)) {
+				// Skip comments
+				do {
+					cursor.forward();
+				} while (!cursor.at(NIL) && !cursor.at(LF) && !cursor.at(CR));
 			}
 			else {
 				break;
 			}
 		}
-		//		char c = curchar();
-		//		while (c != NIL) {
-		//			// Skip comments
-		//			if (c == '#' && (cursor == 0 || prevchar() == LF || prevchar() == CR)) {
-		//				do {
-		//					c = advance();
-		//				} while (c != NIL && c != LF && c != CR);
-		//				skipWhitespace();
-		//			}
-		//			else if (Character.isWhitespace(c)) {
-		//				c = advance();
-		//			}
-		//			else if (Character.isISOControl(c)) {
-		//				c = advance();
-		//			}
-		//			else {
-		//				break;
-		//			}
-		//		}
-	}
-
-
-	private char curchar()
-	{
-		return cursor == rule.length() ? NIL : rule.charAt(cursor);
-	}
-
-
-	private char prevchar()
-	{
-		return rule.charAt(cursor - 1);
-	}
-
-
-	private char advance()
-	{
-		if (++cursor == rule.length()) {
-			return NIL;
-		}
-		char c = rule.charAt(cursor);
-		if (c == CR) {
-			++line;
-			column = 0;
-			// Handle <CR><LF> sequence
-			if (cursor + 1 != rule.length() && rule.charAt(cursor + 1) == LF) {
-				++cursor;
-			}
-		}
-		else if (c == LF) {
-			++line;
-			column = 0;
-		}
-		else {
-			++column;
-		}
-		return c;
 	}
 
 }

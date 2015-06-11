@@ -2,9 +2,9 @@ package org.domainobject.jetlag.core.parser.tokenizer;
 
 public final class CommaToken extends Token {
 
-	CommaToken(String rule, int start)
+	CommaToken(Cursor cursor)
 	{
-		super(rule, start);
+		super(cursor);
 	}
 
 
@@ -16,13 +16,11 @@ public final class CommaToken extends Token {
 
 
 	@Override
-	void extract() throws TokenExtractionException
+	String doExtract() throws TokenExtractionException
 	{
-		token = new TokenBuilder(1);
-		// The cursor (end) now points to the comma
-		token.add(',');
-		// Move cursor past token
-		end = start + 1;
+		// Move cursor past token as per the contract
+		cursor.forward();
+		return ",";
 	}
 
 }

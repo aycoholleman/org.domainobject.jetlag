@@ -13,9 +13,9 @@ import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
  */
 public final class DoubleQuotedStringToken extends Token {
 
-	DoubleQuotedStringToken(String rule, int start)
+	DoubleQuotedStringToken(Cursor cursor)
 	{
-		super(rule, start);
+		super(cursor);
 	}
 
 
@@ -27,33 +27,33 @@ public final class DoubleQuotedStringToken extends Token {
 
 
 	@Override
-	void extract() throws StringNotTerminatedException
+	String doExtract() throws StringNotTerminatedException
 	{
-		token = new TokenBuilder(16);
-		end = start;
-		// The cursor (end) now points to the opening quote.
-		LOOP: while (true) {
+		TokenBuilder token = new TokenBuilder(16);
+		// The cursor now points at the opening quote
+		while (true) {
 			// Move past opening quote
-			char c = advance();
-			switch (c) {
-				case NIL:
+			cursor.forward();
+			if (cursor.at(NIL)) {
+				throw new StringNotTerminatedException(this);
+			}
+			else if (cursor.at(DOUBLE_QUOTE)) {
+				// Done. Move cursor past closing quote
+				cursor.forward();
+				break;
+			}
+			else if (cursor.at(BACKSLASH)) {
+				cursor.forward();
+				if (cursor.at(NIL)) {
 					throw new StringNotTerminatedException(this);
-				case DOUBLE_QUOTE:
-					// Done. Move cursor past closing quote
-					++end;
-					break LOOP;
-				case BACKSLASH:
-					c = advance();
-					if (c == NIL) {
-						throw new StringNotTerminatedException(this);
-					}
-					token.add(BACKSLASH, c);
-					break;
-				default:
-					token.add(c);
-
+				}
+				token.add(BACKSLASH, cursor.at());
+			}
+			else {
+				token.add(cursor.at());
 			}
 		}
+		return token.toString();
 	}
 
 }

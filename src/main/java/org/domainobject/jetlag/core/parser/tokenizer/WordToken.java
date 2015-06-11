@@ -16,9 +16,9 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  */
 public class WordToken extends Token {
 
-	WordToken(String rule, int start)
+	WordToken(Cursor cursor)
 	{
-		super(rule, start);
+		super(cursor);
 	}
 
 
@@ -30,16 +30,15 @@ public class WordToken extends Token {
 
 
 	@Override
-	void extract() throws TokenExtractionException
+	String doExtract() throws TokenExtractionException
 	{
-		token = new TokenBuilder(16);
-		end = start;
-		// The cursor (end) now points to either a '_' or a letter
-		char c = curchar();
+		TokenBuilder token = new TokenBuilder(16);
+		// The cursor now points either to an underscore ('_') or to a letter
 		do {
-			token.add(c);
-			c = advance();
-		} while (Character.isLetterOrDigit(c) || c == '_');
+			token.add(cursor.at());
+			cursor.forward();
+		} while (Character.isLetterOrDigit(cursor.at()) || cursor.at('_'));
+		return token.toString();
 	}
 
 }

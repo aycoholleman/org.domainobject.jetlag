@@ -3,15 +3,14 @@ package org.domainobject.jetlag.core.parser.tokenizer;
 import java.util.Arrays;
 
 /**
- * A seriously dressed-down {@link StringBuilder}, capable only of appending
- * characters, and with some extra knowledge of what tokens are like (e.g.
- * average length).
+ * A dressed-down {@link StringBuilder}, capable only of appending characters,
+ * and with some extra knowledge of what tokens are like (e.g. average length).
  * 
  * @author ayco
  * @created Apr 25, 2015
  *
  */
-final class TokenBuilder {
+class TokenBuilder {
 
 	static final char NIL = 0x00;
 	static final char BACKSLASH = 0x5C;

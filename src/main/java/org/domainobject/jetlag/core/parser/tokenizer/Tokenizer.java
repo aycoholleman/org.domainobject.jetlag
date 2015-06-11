@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @created 3 jun. 2015
  *
  */
-public final class Tokenizer {
+public class Tokenizer {
 
 	private final TokenExtractor tokenExtractor;
 

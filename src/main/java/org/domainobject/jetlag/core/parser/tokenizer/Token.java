@@ -1,7 +1,5 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
-
 /**
  * Base class of all tokens.
  * 
@@ -11,11 +9,13 @@ import static org.domainobject.jetlag.core.parser.tokenizer.TokenBuilder.NIL;
  */
 public abstract class Token {
 
-	protected final String rule;
-	protected final int start;
+	protected final Cursor cursor;
 
-	protected TokenBuilder token;
-	protected int end = -1;
+	private final int start;
+	private final int line;
+
+	private String token;
+	private int end;
 
 
 	/**
@@ -27,16 +27,17 @@ public abstract class Token {
 	 * @param start
 	 *            The token index of the first character of the token
 	 */
-	Token(String rule, int start)
+	Token(Cursor cursor)
 	{
-		this.rule = rule;
-		this.start = start;
+		this.cursor = cursor;
+		this.start = cursor.position();
+		this.line = cursor.line();
 	}
 
 
 	/**
 	 * Get the type of the token. Could also be inferred by calling
-	 * {@code getClass()} or using {@code instanceof}, but this is a bit more
+	 * {@code getClass()} or using {@code instanceof}, but this is more
 	 * friendly.
 	 * 
 	 * @return The type of the token
@@ -44,25 +45,25 @@ public abstract class Token {
 	public abstract TokenType getType();
 
 
+	public final void extract() throws TokenExtractionException
+	{
+		token = doExtract();
+		end = cursor.position();
+	}
+
+
 	/**
-	 * Extract the token from the rule. Subclasses are expected to do two
-	 * things:
-	 * <ol>
-	 * <li>Create and fill a {@link TokenBuilder} and assign it to the
-	 * {@link #token} field of this class
-	 * <li>Set the {@link #end} field to right <i>after</i> the last character
-	 * of the token.
-	 * </ol>
-	 * Subclasses can and must assume that the {@link start} field contains the
-	 * index of the first character of the token. E.g. for a single quoted token
-	 * {@code start} is the position of the opening quote. After the extract
-	 * method completes, {@code cursor} must be the index <i>after</i> the
-	 * closing quote.
+	 * Method implementing the actual extraction logic for a particular
+	 * {@code Token} subclass. Subclasses are expected to move to the character
+	 * just <i>after</i> the last character of the token, even if that means
+	 * moving it beyond the end of the rule. Subclasses can and must assume that
+	 * the cursor points at the first character of the token.
 	 * 
+	 * @return The token
 	 * 
 	 * @throws TokenExtractionException
 	 */
-	abstract void extract() throws TokenExtractionException;
+	abstract String doExtract() throws TokenExtractionException;
 
 
 	/**
@@ -73,6 +74,17 @@ public abstract class Token {
 	public int start()
 	{
 		return start;
+	}
+
+
+	/**
+	 * Get the line number of the first character of the token.
+	 * 
+	 * @return The line number of the first character of the token
+	 */
+	public int line()
+	{
+		return line;
 	}
 
 
@@ -113,57 +125,4 @@ public abstract class Token {
 		return string();
 	}
 
-
-	/**
-	 * Have we reached the end of the rule?
-	 * 
-	 * @return
-	 */
-	protected final boolean eof()
-	{
-		return end == rule.length();
-	}
-
-
-	/**
-	 * Get the character that the cursor ({@link #end}) is currently pointing
-	 * to, or {@link TokenBuilder#NIL NIL} if the cursor has moved past the end
-	 * of the rule.
-	 * 
-	 * @return The character withinin the rule that the cursor ({@link #end}) is
-	 *         currently pointing to, or {@link TokenBuilder#NIL NIL} if the
-	 *         cursor has moved past the end of the rule.
-	 */
-	protected final char curchar()
-	{
-		return end >= rule.length() ? NIL : rule.charAt(end);
-	}
-
-
-	/**
-	 * Peek one character ahead in the rule, without moving the cursor forward.
-	 * 
-	 * @return The next character in the rule, or {@link TokenBuilder#NIL NIL}
-	 *         if the cursor ({@link #end}) has has moved past the end of the
-	 *         rule.
-	 * 
-	 */
-	protected final char peek()
-	{
-		return end + 1 >= rule.length() ? NIL : rule.charAt(end + 1);
-	}
-
-
-	/**
-	 * Move to the cursor ({@link #end}) forward and return the character at
-	 * that position within the rule.
-	 * 
-	 * @return The next character in the rule, or {@link TokenBuilder#NIL NIL}
-	 *         if the cursor ({@link #end}) has has moved past the end of the
-	 *         rule.
-	 */
-	protected final char advance()
-	{
-		return end + 1 == rule.length() ? NIL : rule.charAt(++end);
-	}
 }

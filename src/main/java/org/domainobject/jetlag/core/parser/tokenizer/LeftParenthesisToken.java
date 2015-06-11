@@ -9,9 +9,9 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  */
 public final class LeftParenthesisToken extends Token {
 
-	LeftParenthesisToken(String rule, int start)
+	LeftParenthesisToken(Cursor cursor)
 	{
-		super(rule, start);
+		super(cursor);
 	}
 
 
@@ -23,12 +23,11 @@ public final class LeftParenthesisToken extends Token {
 
 
 	@Override
-	void extract() throws TokenExtractionException
+	String doExtract() throws TokenExtractionException
 	{
-		// At this point cursor points to left parenthesis
-		token = new TokenBuilder(1);
-		token.add('(');
-		end = start + 1;
+		// Move cursor past token
+		cursor.forward();
+		return "(";
 	}
 
 }
