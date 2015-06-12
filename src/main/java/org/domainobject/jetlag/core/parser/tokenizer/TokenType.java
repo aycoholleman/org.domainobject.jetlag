@@ -1,7 +1,7 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
 /**
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 25, 2015
  *
  */

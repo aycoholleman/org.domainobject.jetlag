@@ -10,11 +10,11 @@ package org.domainobject.jetlag.core.parser.tokenizer;
  * The tokenizer has no way of distinguishing between these subtypes. Keywords
  * in practice never start with an underscore, but we won't count on it.
  * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 29, 2015
  *
  */
-public class WordToken extends Token {
+class WordToken extends Token {
 
 	WordToken(Cursor cursor)
 	{
@@ -32,8 +32,8 @@ public class WordToken extends Token {
 	@Override
 	String doExtract() throws TokenExtractionException
 	{
+		// Cursor now points either to an underscore ('_') or to a letter
 		TokenBuilder token = new TokenBuilder(16);
-		// The cursor now points either to an underscore ('_') or to a letter
 		do {
 			token.add(cursor.at());
 			cursor.forward();

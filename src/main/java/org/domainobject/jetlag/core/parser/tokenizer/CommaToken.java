@@ -1,6 +1,6 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-public final class CommaToken extends Token {
+class CommaToken extends Token {
 
 	CommaToken(Cursor cursor)
 	{

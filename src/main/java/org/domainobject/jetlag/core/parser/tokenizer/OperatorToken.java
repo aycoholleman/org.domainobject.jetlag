@@ -1,5 +1,7 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.NIL;
+
 import org.domainobject.jetlag.core.parser.Operator;
 
 /**
@@ -7,10 +9,7 @@ import org.domainobject.jetlag.core.parser.Operator;
  * @created May 1, 2015
  *
  */
-public final class OperatorToken extends Token {
-
-	private Operator operator;
-
+class OperatorToken extends Token {
 
 	OperatorToken(Cursor cursor)
 	{
@@ -25,36 +24,25 @@ public final class OperatorToken extends Token {
 	}
 
 
-	public Operator getOperator()
-	{
-		return operator;
-	}
-
-
 	@Override
 	String doExtract() throws TokenExtractionException
 	{
+		// Cursor now points at the first character of an operator
 		char c0 = cursor.at();
-		char c1 = cursor.forward();
-		String token;
-		if (c1 == Cursor.NIL) {
+		char c1 = cursor.forward().at();
+		if (c1 == NIL) {
+			return String.valueOf(c0);
+		}
+		String token = String.valueOf(new char[] { c0, c1 });
+		if (Operator.forSymbol(token) == null) {
+			// We have a one-character operator
 			token = String.valueOf(c0);
-			operator = Operator.forSymbol(token);
 		}
 		else {
-			token = String.valueOf(new char[] { c0, c1 });
-			operator = Operator.forSymbol(token);
-			if (operator == null) {
-				// We have a one-character operator
-				token = String.valueOf(c0);
-				operator = Operator.forSymbol(token);
-			}
-			else {
-				// We have a two-character operator; move past 2nd character
-				cursor.forward();
-			}
+			// Move past 2nd character
+			cursor.forward();
 		}
-		return token.toString();
+		return token;
 	}
 
 }

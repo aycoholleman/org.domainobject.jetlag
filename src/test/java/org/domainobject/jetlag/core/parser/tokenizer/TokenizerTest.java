@@ -53,7 +53,7 @@ public class TokenizerTest {
 	public void testNextToken()
 	{
 		String rule12 = rules.get("rule-012");
-		Tokenizer tokenizer = new Tokenizer(rule12);
+		Tokenizer tokenizer = new Tokenizer(new Cursor(rule12));
 		try {
 			assertTrue(tokenizer.nextToken().string().equals("if"));
 			assertTrue(tokenizer.nextToken().string().equals("("));

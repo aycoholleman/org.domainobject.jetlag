@@ -3,8 +3,6 @@ package org.domainobject.jetlag.core.parser.tokenizer;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.domainobject.jetlag.core.parser.tokenizer.DoubleQuotedStringToken;
-import org.domainobject.jetlag.core.parser.tokenizer.StringNotTerminatedException;
 import org.junit.Test;
 
 /**
@@ -28,53 +26,56 @@ public class DoubleQuotedStringTest {
 		 * Rule starts with double quoted token.
 		 */
 		String rule = String.format("\"%s\"FOO", token);
-		DoubleQuotedStringToken dqs = new DoubleQuotedStringToken(rule, 0);
+		Cursor cursor = new Cursor(rule);
+		DoubleQuotedStringToken stringToken = new DoubleQuotedStringToken(cursor);
 		try {
-			dqs.extract();
-			assertTrue(dqs.string() != null);
-			assertTrue(dqs.string().equals(token));
+			stringToken.extract();
+			assertTrue(stringToken.string() != null);
+			assertTrue(stringToken.string().equals(token));
 		}
-		catch (StringNotTerminatedException e) {
-			fail("StringNotTerminatedException not expected");
+		catch (TokenExtractionException e) {
+			fail("Not expected");
 		}
 
 		/*
 		 * Rule starts with double quoted token.
 		 */
 		rule = String.format("\"%s\" FOO", token);
-		dqs = new DoubleQuotedStringToken(rule, 0);
+		stringToken = new DoubleQuotedStringToken(new Cursor(rule));
 		try {
-			dqs.extract();
-			assertTrue(dqs.string() != null);
-			assertTrue(dqs.string().equals(token));
+			stringToken.extract();
+			assertTrue(stringToken.string() != null);
+			assertTrue(stringToken.string().equals(token));
 		}
-		catch (StringNotTerminatedException e) {
-			fail("StringNotTerminatedException not expected");
+		catch (TokenExtractionException e) {
+			fail("Not expected");
 		}
 
 		rule = String.format("\"%s\"\" FOO", token);
-		dqs = new DoubleQuotedStringToken(rule, 0);
+		stringToken = new DoubleQuotedStringToken(new Cursor(rule));
 		try {
-			dqs.extract();
-			assertTrue(dqs.string() != null);
-			assertTrue(dqs.string().equals(token));
+			stringToken.extract();
+			assertTrue(stringToken.string() != null);
+			assertTrue(stringToken.string().equals(token));
 		}
-		catch (StringNotTerminatedException e) {
-			fail("StringNotTerminatedException not expected");
+		catch (TokenExtractionException e) {
+			fail("Not expected");
 		}
 
 		/*
 		 * Rule ends with double quoted token.
 		 */
 		rule = String.format("FOO\"%s\"", token);
-		dqs = new DoubleQuotedStringToken(rule, 3);
+		cursor = new Cursor(rule);
+		cursor.forward().forward().forward();
+		stringToken = new DoubleQuotedStringToken(cursor);
 		try {
-			dqs.extract();
-			assertTrue(dqs.string() != null);
-			assertTrue(dqs.string().equals(token));
+			stringToken.extract();
+			assertTrue(stringToken.string() != null);
+			assertTrue(stringToken.string().equals(token));
 		}
-		catch (StringNotTerminatedException e) {
-			fail("StringNotTerminatedException not expected");
+		catch (TokenExtractionException e) {
+			fail("Not expected");
 		}
 
 		/*
@@ -83,14 +84,16 @@ public class DoubleQuotedStringTest {
 		token = "";
 
 		rule = String.format("FOO\"%s\"BAR", token);
-		dqs = new DoubleQuotedStringToken(rule, 3);
+		cursor = new Cursor(rule);
+		cursor.forward().forward().forward();
+		stringToken = new DoubleQuotedStringToken(cursor);
 		try {
-			dqs.extract();
-			assertTrue(dqs.string() != null);
-			assertTrue(dqs.string().equals(token));
+			stringToken.extract();
+			assertTrue(stringToken.string() != null);
+			assertTrue(stringToken.string().equals(token));
 		}
-		catch (StringNotTerminatedException e) {
-			fail("StringNotTerminatedException not expected");
+		catch (TokenExtractionException e) {
+			fail("Not expected");
 		}
 	}
 

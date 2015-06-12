@@ -1,13 +1,11 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
 /**
- * A {@code Token} capable of extracting a left parenthesis from the rule.
- * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 29, 2015
  *
  */
-public final class LeftParenthesisToken extends Token {
+class LeftParenthesisToken extends Token {
 
 	LeftParenthesisToken(Cursor cursor)
 	{

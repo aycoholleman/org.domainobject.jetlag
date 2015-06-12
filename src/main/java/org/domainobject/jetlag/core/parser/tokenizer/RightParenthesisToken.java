@@ -1,13 +1,11 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
 /**
- * A {@code Token} capable of extracting a right parenthesis from the rule.
- * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 29, 2015
  *
  */
-public final class RightParenthesisToken extends Token {
+class RightParenthesisToken extends Token {
 
 	RightParenthesisToken(Cursor cursor)
 	{

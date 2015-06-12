@@ -5,13 +5,12 @@ import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.DOUBLE_QUOTE;
 import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.NIL;
 
 /**
- * {@link Token} subclass for extracting double quoted strings.
  * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 25, 2015
  *
  */
-public final class DoubleQuotedStringToken extends Token {
+class DoubleQuotedStringToken extends Token {
 
 	DoubleQuotedStringToken(Cursor cursor)
 	{

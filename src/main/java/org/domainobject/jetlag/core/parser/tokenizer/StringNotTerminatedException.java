@@ -1,5 +1,11 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
+/**
+ * 
+ * @author Ayco Holleman
+ * @created 12 jun. 2015
+ *
+ */
 public class StringNotTerminatedException extends TokenExtractionException {
 
 	private static final long serialVersionUID = 3642920208392056186L;

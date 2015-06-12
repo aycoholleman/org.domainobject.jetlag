@@ -3,7 +3,7 @@ package org.domainobject.jetlag.core.parser.tokenizer;
 /**
  * Base class of all tokens.
  * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 25, 2015
  *
  */

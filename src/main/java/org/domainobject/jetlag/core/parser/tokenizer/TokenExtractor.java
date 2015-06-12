@@ -11,7 +11,7 @@ import org.domainobject.jetlag.core.parser.Operator;
 /**
  * Identifies and extracts tokens from a rule.
  * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 26, 2015
  *
  */
@@ -20,9 +20,9 @@ class TokenExtractor {
 	private final Cursor cursor;
 
 
-	TokenExtractor(String rule)
+	TokenExtractor(Cursor cursor)
 	{
-		this.cursor = new Cursor(rule);
+		this.cursor = cursor;
 	}
 
 

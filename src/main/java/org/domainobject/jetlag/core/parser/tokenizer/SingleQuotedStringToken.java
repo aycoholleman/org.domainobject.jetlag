@@ -5,9 +5,7 @@ import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.BACKSLASH;
 import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.NIL;
 
 /**
- * {@link Token} subclass for extracting single quoted strings.
- * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 25, 2015
  *
  */

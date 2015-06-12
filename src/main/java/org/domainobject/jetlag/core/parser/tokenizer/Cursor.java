@@ -1,10 +1,11 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
 /**
- * Class that scrolls along the characters of a {@code String} while keeping
- * track of line numbers and columns.
+ * Class that scrolls along the characters of a rule while keeping track of line
+ * numbers and columns. {@link Token} instances and {@link TokenExtractor}
+ * instances can only access the contents of a rule through a {@code Cursor}.
  * 
- * @author ayco
+ * @author Ayco Holleman
  * @created 11 jun. 2015
  *
  */
@@ -68,16 +69,14 @@ class Cursor {
 	}
 
 
-	/*
-	 * Move the cursor forward and return the character at the new position
-	 */
-	char forward()
+	Cursor forward()
 	{
 		if (curr == NIL) {
-			return NIL;
+			return this;
 		}
 		if (++pos == rule.length()) {
-			return (curr = NIL);
+			curr = NIL;
+			return this;
 		}
 		curr = rule.charAt(pos);
 		if (curr == CR) {
@@ -93,7 +92,7 @@ class Cursor {
 		else {
 			++col;
 		}
-		return curr;
+		return this;
 	}
 
 

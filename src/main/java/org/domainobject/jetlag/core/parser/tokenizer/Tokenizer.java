@@ -15,9 +15,9 @@ public class Tokenizer {
 	private int current = -1;
 
 
-	public Tokenizer(String rule)
+	public Tokenizer(Cursor cursor)
 	{
-		this.tokenExtractor = new TokenExtractor(rule);
+		this.tokenExtractor = new TokenExtractor(cursor);
 	}
 
 

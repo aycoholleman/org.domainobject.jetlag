@@ -1,14 +1,11 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
 /**
- * A {@code Token} capable of extracting numerical strings (either integer or
- * decimal).
- * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 27, 2015
  *
  */
-public class NumberToken extends Token {
+class NumberToken extends Token {
 
 	static boolean isNumberStart(char c)
 	{

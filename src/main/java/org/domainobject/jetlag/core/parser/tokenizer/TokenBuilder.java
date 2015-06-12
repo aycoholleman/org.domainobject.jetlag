@@ -6,7 +6,7 @@ import java.util.Arrays;
  * A dressed-down {@link StringBuilder}, capable only of appending characters,
  * and with some extra knowledge of what tokens are like (e.g. average length).
  * 
- * @author ayco
+ * @author Ayco Holleman
  * @created Apr 25, 2015
  *
  */

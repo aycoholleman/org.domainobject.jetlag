@@ -1,8 +1,8 @@
 package org.domainobject.jetlag.core.parser.tokenizer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import org.domainobject.jetlag.core.parser.Operator;
 import org.junit.Test;
 
 public class OperatorTokenTest {
@@ -11,11 +11,11 @@ public class OperatorTokenTest {
 	public void testExtract()
 	{
 		String rule = "7+8";
-		OperatorToken tok = new OperatorToken(rule, 1);
+		Cursor cursor = new Cursor(rule);
+		cursor.forward();
+		OperatorToken tok = new OperatorToken(cursor);
 		try {
 			tok.extract();
-			assertNotNull(tok.getOperator());
-			assertEquals(Operator.ADD, tok.getOperator());
 			assertEquals("+", tok.toString());
 		}
 		catch (TokenExtractionException e) {
