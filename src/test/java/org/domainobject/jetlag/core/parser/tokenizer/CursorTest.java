@@ -2,6 +2,8 @@ package org.domainobject.jetlag.core.parser.tokenizer;
 
 import static org.junit.Assert.*;
 
+import static org.domainobject.jetlag.core.parser.tokenizer.Cursor.*;
+
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -45,14 +47,28 @@ public class CursorTest {
 		assertEquals('f', cursor.forward().at());
 		assertEquals(' ', cursor.forward().at());
 		assertEquals('(', cursor.forward().at());
-		assertEquals(Cursor.LF, cursor.forward().at());
-		assertEquals(Cursor.TAB, cursor.forward().at());
+		assertEquals(LF, cursor.forward().at());
+		assertEquals(TAB, cursor.forward().at());
+		
+		cursor = new Cursor(rules.get("empty-rule"));
+		assertEquals(NIL, cursor.forward().at());
+		
 	}
 
 
 	@Test
 	public void testAt__char()
 	{
+		Cursor cursor = new Cursor(rules.get("rule-012"));
+		assertTrue(cursor.at('i'));
+		assertTrue(cursor.forward().at('f'));
+		assertTrue(cursor.forward().at(' '));
+		assertTrue(cursor.forward().at('('));
+		assertTrue(cursor.forward().at(LF));
+		assertTrue(cursor.forward().at(TAB));
+		
+		cursor = new Cursor(rules.get("empty-rule"));
+		assertTrue(cursor.forward().at(NIL));
 	}
 
 
