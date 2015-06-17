@@ -14,18 +14,18 @@ public abstract class Token {
 	private final int start;
 	private final int line;
 
-	private String token;
+	private String data;
 	private int end;
 
 
 	/**
-	 * Create a {@code Token} that extracts a token from the specified rule
+	 * Create a {@code Token} that extracts a data from the specified rule
 	 * starting from the specified position ({@code start}).
 	 * 
 	 * @param rule
 	 *            The rule to extract the token from
 	 * @param start
-	 *            The token index of the first character of the token
+	 *            The data index of the first character of the data
 	 */
 	Token(Cursor cursor)
 	{
@@ -36,40 +36,36 @@ public abstract class Token {
 
 
 	/**
-	 * Get the type of the token. Could also be inferred by calling
-	 * {@code getClass()} or using {@code instanceof}, but this is more
-	 * friendly.
+	 * Get the type of the token. Since subclasses of {@code Token} only have
+	 * package visibility, calling this method is the only way to figure out the
+	 * actual type of the token.
 	 * 
-	 * @return The type of the token
+	 * @return The type of the data
 	 */
 	public abstract TokenType getType();
 
 
 	public final void extract() throws TokenExtractionException
 	{
-		token = doExtract();
+		data = doExtract();
 		end = cursor.position();
 	}
 
 
-	/**
-	 * Method implementing the actual extraction logic for a particular
-	 * {@code Token} subclass. Subclasses are expected to move to the character
-	 * just <i>after</i> the last character of the token, even if that means
-	 * moving it beyond the end of the rule. Subclasses can and must assume that
-	 * the cursor points at the first character of the token.
-	 * 
-	 * @return The token
-	 * 
-	 * @throws TokenExtractionException
+	/*
+	 * Method implementing the actual extraction logic. Subclasses are expected
+	 * to move the cursor to the character just after the last character of the
+	 * token, even if that means moving it beyond the end of the rule.
+	 * Subclasses can and must assume that the cursor points at the first
+	 * character of the token.
 	 */
 	abstract String doExtract() throws TokenExtractionException;
 
 
 	/**
-	 * Get the token index of the first character of the token.
+	 * Get the data index of the first character of the data.
 	 * 
-	 * @return The token index of the first character of the token
+	 * @return The data index of the first character of the token
 	 */
 	public int start()
 	{
@@ -78,7 +74,7 @@ public abstract class Token {
 
 
 	/**
-	 * Get the line number of the first character of the token.
+	 * Get the line number of the first character of the data.
 	 * 
 	 * @return The line number of the first character of the token
 	 */
@@ -89,10 +85,10 @@ public abstract class Token {
 
 
 	/**
-	 * Get the token index right <i>after</i> the last character of the token,
-	 * or the index at which token extraction encountered an error.
+	 * Get the data index right <i>after</i> the last character of the data, or
+	 * the index at which data extraction encountered an error.
 	 * 
-	 * @return The token index right after the last character of the token
+	 * @return The data index right after the last character of the token
 	 */
 	public int end()
 	{
@@ -101,28 +97,30 @@ public abstract class Token {
 
 
 	/**
-	 * Get the {@code String} extracted by this {@code Token} instance
+	 * Get the {@code String} extracted by this {@code Token} instance. If the
+	 * {@link #extract()} method has not been called yet on this instance, an
+	 * {@code IllegalStateException} will be thrown.
 	 * 
 	 * @return The {@code String} extracted by this {@code Token}
 	 */
-	public String string()
+	public String data()
 	{
-		if (token == null) {
+		if (data == null) {
 			throw new IllegalStateException("Token not extracted yet");
 		}
-		return token.toString();
+		return data;
 	}
 
 
 	/**
-	 * Equivalent to calling {@link #string()}.
+	 * Returns a {@code String} representation of this {@code Token}.
 	 * 
 	 * @return The {@code String} representation of this token
 	 */
 	@Override
 	public String toString()
 	{
-		return string();
+		return data;
 	}
 
 }

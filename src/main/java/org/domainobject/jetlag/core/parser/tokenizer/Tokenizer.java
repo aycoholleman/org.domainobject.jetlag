@@ -3,74 +3,73 @@ package org.domainobject.jetlag.core.parser.tokenizer;
 import java.util.ArrayList;
 
 /**
- * @author ayco
+ * @author Ayco Holleman
  * @created 3 jun. 2015
  *
  */
 public class Tokenizer {
 
 	private final TokenExtractor tokenExtractor;
+	private final ArrayList<Token> tokens;
 
-	private ArrayList<Token> tokens;
 	private int current = -1;
 
 
-	public Tokenizer(Cursor cursor)
-	{
-		this.tokenExtractor = new TokenExtractor(cursor);
-	}
-
-
 	/**
-	 * Are there more tokens to be extracted from the rule?
+	 * Creates a new {@code Tokenizer} for the rule encapsulated by the
+	 * specified {@code Cursor}. As part of the initialization process the
+	 * constructor will attempt to extract the first token from the rule (if
+	 * any) and may therefore throw an {@link IllegalCharacterException} or an
+	 * {@link TokenExtractionException}.
 	 * 
-	 * @return {@code false} if there is nothing left but whitespace in the
-	 *         rule; {@code true} otherwise
+	 * @param cursor
+	 *            The {@code Cursor} through which to access the rule
+	 * 
+	 * @throws IllegalCharacterException
+	 * @throws TokenExtractionException
 	 */
-	public boolean hasMoreTokens()
+	public Tokenizer(Cursor cursor) throws IllegalCharacterException, TokenExtractionException
 	{
-		return tokenExtractor.hasMoreTokens();
+		tokenExtractor = new TokenExtractor(cursor);
+		Token token = tokenExtractor.nextToken();
+		if (token == null) {
+			tokens = null;
+		}
+		else {
+			tokens = new ArrayList<>();
+			tokens.add(token);
+		}
 	}
 
 
 	/**
-	 * Get the current token in the rule.
+	 * Retrieve the next token from the rule.
 	 * 
-	 * @return
-	 */
-	public Token currentToken()
-	{
-		return tokens == null ? null : tokens.get(current);
-	}
-
-
-	/**
-	 * Retrieve the next token from the token stream.
+	 * @return The next token from the rule or {@code null} in case of an empty
+	 *         rule or if there are no more tokens to be extracted from the rule
 	 * 
-	 * @return
 	 * @throws IllegalCharacterException
 	 * @throws TokenExtractionException
 	 */
 	public Token nextToken() throws IllegalCharacterException, TokenExtractionException
 	{
-		Token token;
-		if (tokens == null) {
-			token = tokenExtractor.nextToken();
-			if (token != null) {
-				++current;
-				tokens = new ArrayList<>();
-				tokens.add(token);
-			}
+		if (tokens == null || current == tokens.size()) {
+			return null;
 		}
-		else if (current + 1 < tokens.size()) {
-			token = tokens.get(++current);
+		++current;
+		if (current == 0) {
+			current = 0;
+			return tokens.get(0);
 		}
-		else {
-			token = tokenExtractor.nextToken();
-			if (token != null) {
-				++current;
-				tokens.add(token);
-			}
+		if (current < tokens.size()) {
+			/*
+			 * Tokens already retrieved through peek() calls
+			 */
+			return tokens.get(current);
+		}
+		Token token = tokenExtractor.nextToken();
+		if (token != null) {
+			tokens.add(token);
 		}
 		return token;
 	}
@@ -78,23 +77,20 @@ public class Tokenizer {
 
 	public Token peek() throws IllegalCharacterException, TokenExtractionException
 	{
-		Token token;
-		if (tokens == null) {
-			token = tokenExtractor.nextToken();
-			if (token != null) {
-				tokens = new ArrayList<>();
-				tokens.add(token);
-			}
+		if (tokens == null || current == tokens.size()) {
+			return null;
 		}
-		else if (current + 1 < tokens.size()) {
-			token = tokens.get(current + 1);
+		if (current == -1) {
+			return tokens.get(0);
 		}
-		else {
-			token = tokenExtractor.nextToken();
-			if (token != null) {
-				tokens.add(token);
-			}
+		if (current + 1 < tokens.size()) {
+			return tokens.get(current + 1);
 		}
+		Token token = tokenExtractor.nextToken();
+		if (token == null) {
+			return null;
+		}
+		tokens.add(token);
 		return token;
 	}
 
@@ -104,32 +100,21 @@ public class Tokenizer {
 		if (ahead < 1) {
 			throw new IllegalArgumentException("Argument must be greater than 0");
 		}
+		if (tokens == null || current == tokens.size()) {
+			return null;
+		}
+		int curr = current == -1 ? 0 : current;
+		if (curr + ahead < tokens.size()) {
+			return tokens.get(curr + ahead);
+		}
+		int newSize = curr + ahead + 1;
 		Token token = null;
-		if (tokens == null) {
+		while (tokens.size() < newSize) {
 			token = tokenExtractor.nextToken();
-			if (token != null) {
-				tokens = new ArrayList<>();
-				tokens.add(token);
-				while (--ahead != 0) {
-					token = tokenExtractor.nextToken();
-					if (token == null) {
-						break;
-					}
-					tokens.add(token);
-				}
+			if (token == null) {
+				break;
 			}
-		}
-		else if (current + ahead < tokens.size()) {
-			token = tokens.get(current + ahead);
-		}
-		else {
-			while (tokens.size() < (current + ahead)) {
-				token = tokenExtractor.nextToken();
-				if (token == null) {
-					break;
-				}
-				tokens.add(token);
-			}
+			tokens.add(token);
 		}
 		return token;
 	}

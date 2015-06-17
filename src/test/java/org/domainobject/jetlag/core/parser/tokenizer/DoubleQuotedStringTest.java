@@ -30,8 +30,8 @@ public class DoubleQuotedStringTest {
 		DoubleQuotedStringToken stringToken = new DoubleQuotedStringToken(cursor);
 		try {
 			stringToken.extract();
-			assertTrue(stringToken.string() != null);
-			assertTrue(stringToken.string().equals(token));
+			assertTrue(stringToken.data() != null);
+			assertTrue(stringToken.data().equals(token));
 		}
 		catch (TokenExtractionException e) {
 			fail("Not expected");
@@ -44,8 +44,8 @@ public class DoubleQuotedStringTest {
 		stringToken = new DoubleQuotedStringToken(new Cursor(rule));
 		try {
 			stringToken.extract();
-			assertTrue(stringToken.string() != null);
-			assertTrue(stringToken.string().equals(token));
+			assertTrue(stringToken.data() != null);
+			assertTrue(stringToken.data().equals(token));
 		}
 		catch (TokenExtractionException e) {
 			fail("Not expected");
@@ -55,8 +55,8 @@ public class DoubleQuotedStringTest {
 		stringToken = new DoubleQuotedStringToken(new Cursor(rule));
 		try {
 			stringToken.extract();
-			assertTrue(stringToken.string() != null);
-			assertTrue(stringToken.string().equals(token));
+			assertTrue(stringToken.data() != null);
+			assertTrue(stringToken.data().equals(token));
 		}
 		catch (TokenExtractionException e) {
 			fail("Not expected");
@@ -71,8 +71,8 @@ public class DoubleQuotedStringTest {
 		stringToken = new DoubleQuotedStringToken(cursor);
 		try {
 			stringToken.extract();
-			assertTrue(stringToken.string() != null);
-			assertTrue(stringToken.string().equals(token));
+			assertTrue(stringToken.data() != null);
+			assertTrue(stringToken.data().equals(token));
 		}
 		catch (TokenExtractionException e) {
 			fail("Not expected");
@@ -89,8 +89,8 @@ public class DoubleQuotedStringTest {
 		stringToken = new DoubleQuotedStringToken(cursor);
 		try {
 			stringToken.extract();
-			assertTrue(stringToken.string() != null);
-			assertTrue(stringToken.string().equals(token));
+			assertTrue(stringToken.data() != null);
+			assertTrue(stringToken.data().equals(token));
 		}
 		catch (TokenExtractionException e) {
 			fail("Not expected");
