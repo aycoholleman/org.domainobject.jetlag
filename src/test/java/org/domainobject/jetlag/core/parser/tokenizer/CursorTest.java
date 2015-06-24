@@ -50,9 +50,18 @@ public class CursorTest {
 		assertEquals(LF, cursor.forward().at());
 		assertEquals(TAB, cursor.forward().at());
 		
-		cursor = new Cursor(rules.get("empty-rule"));
-		assertEquals(NIL, cursor.forward().at());
+		cursor = new Cursor(rules.get("rule-005"));
+		assertEquals('1', cursor.at());
+		assertEquals('3', cursor.forward().at());
+		assertEquals('4', cursor.forward().at());
+		assertEquals(NIL, cursor.forward().at());	
+		assertEquals(NIL, cursor.forward().at());	
+		assertEquals(NIL, cursor.forward().at());	
 		
+		cursor = new Cursor(rules.get("empty-rule"));
+		assertEquals(NIL, cursor.forward().at());	
+		assertEquals(NIL, cursor.forward().at());	
+		assertEquals(NIL, cursor.forward().at());	
 	}
 
 
@@ -75,12 +84,34 @@ public class CursorTest {
 	@Test
 	public void testPrev()
 	{
+		Cursor cursor = new Cursor(rules.get("rule-012"));
+		assertEquals(NIL, cursor.prev());
+		assertEquals('i', cursor.forward().prev());
+		assertEquals('f', cursor.forward().prev());
+		assertEquals(' ', cursor.forward().prev());
+		assertEquals('(', cursor.forward().prev());
+		assertEquals(LF, cursor.forward().prev());
+		assertEquals(TAB, cursor.forward().prev());
+		assertEquals(TAB, cursor.prev());
+		
+		cursor = new Cursor(rules.get("empty-rule"));
+		assertEquals(NIL, cursor.prev());
+		assertEquals(NIL, cursor.prev());
 	}
 
 
 	@Test
 	public void testPeek()
 	{
+		Cursor cursor = new Cursor(rules.get("rule-012"));
+		assertEquals('f', cursor.peek());
+		assertEquals(' ', cursor.forward().peek());
+		
+		cursor = new Cursor(rules.get("empty-rule"));
+		assertEquals(NIL, cursor.peek());
+		assertEquals(NIL, cursor.peek());
+		assertEquals(NIL, cursor.forward().peek());
+		assertEquals(NIL, cursor.forward().peek());
 	}
 
 
