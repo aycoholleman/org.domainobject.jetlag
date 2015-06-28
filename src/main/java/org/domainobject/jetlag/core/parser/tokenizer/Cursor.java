@@ -20,7 +20,7 @@ class Cursor {
 	static final char BACKSLASH = 0x5C;
 
 	private String rule;
-	private int pos;
+	private int pos = -1;
 	private int line;
 	private int col;
 	private char curr;
@@ -29,7 +29,13 @@ class Cursor {
 	Cursor(String rule)
 	{
 		this.rule = rule;
-		this.curr = rule.length() == 0 ? NIL : rule.charAt(0);
+		if (rule.length() == 0) {
+			this.curr = NIL;
+		}
+		else {
+			this.curr = rule.charAt(0);
+			checkPosition();
+		}
 	}
 
 
@@ -56,7 +62,7 @@ class Cursor {
 	 */
 	char prev()
 	{
-		return pos == 0 ? NIL : rule.charAt(pos - 1);
+		return pos == 0 || pos == -1 ? NIL : rule.charAt(pos - 1);
 	}
 
 
@@ -74,23 +80,16 @@ class Cursor {
 		if (curr == NIL) {
 			return this;
 		}
-		if (++pos == rule.length()) {
+		++pos;
+		if (pos == 0) {
+			// First call to forward()
+		}
+		else if (pos == rule.length()) {
 			curr = NIL;
-			return this;
-		}
-		curr = rule.charAt(pos);
-		if (curr == CR) {
-			++line;
-			col = 0;
-		}
-		else if (curr == LF) {
-			if (prev() != CR) {
-				++line;
-				col = 0;
-			}
 		}
 		else {
-			++col;
+			curr = rule.charAt(pos);
+			checkPosition();
 		}
 		return this;
 	}
@@ -122,6 +121,24 @@ class Cursor {
 		cursor.col = this.col;
 		cursor.curr = this.curr;
 		return cursor;
+	}
+
+
+	private void checkPosition()
+	{
+		if (curr == CR) {
+			++line;
+			col = 0;
+		}
+		else if (curr == LF) {
+			if (prev() != CR) {
+				++line;
+				col = 0;
+			}
+		}
+		else {
+			++col;
+		}
 	}
 
 }

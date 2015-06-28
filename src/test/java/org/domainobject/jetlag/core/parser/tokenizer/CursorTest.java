@@ -44,6 +44,7 @@ public class CursorTest {
 	{
 		Cursor cursor = new Cursor(rules.get("rule-012"));
 		assertEquals('i', cursor.at());
+		assertEquals('i', cursor.forward().at());
 		assertEquals('f', cursor.forward().at());
 		assertEquals(' ', cursor.forward().at());
 		assertEquals('(', cursor.forward().at());
@@ -52,6 +53,7 @@ public class CursorTest {
 		
 		cursor = new Cursor(rules.get("rule-005"));
 		assertEquals('1', cursor.at());
+		assertEquals('1', cursor.forward().at());
 		assertEquals('3', cursor.forward().at());
 		assertEquals('4', cursor.forward().at());
 		assertEquals(NIL, cursor.forward().at());	
@@ -70,6 +72,7 @@ public class CursorTest {
 	{
 		Cursor cursor = new Cursor(rules.get("rule-012"));
 		assertTrue(cursor.at('i'));
+		assertTrue(cursor.forward().at('i'));
 		assertTrue(cursor.forward().at('f'));
 		assertTrue(cursor.forward().at(' '));
 		assertTrue(cursor.forward().at('('));
@@ -86,6 +89,7 @@ public class CursorTest {
 	{
 		Cursor cursor = new Cursor(rules.get("rule-012"));
 		assertEquals(NIL, cursor.prev());
+		assertEquals(NIL, cursor.forward().prev());
 		assertEquals('i', cursor.forward().prev());
 		assertEquals('f', cursor.forward().prev());
 		assertEquals(' ', cursor.forward().prev());
@@ -104,7 +108,8 @@ public class CursorTest {
 	public void testPeek()
 	{
 		Cursor cursor = new Cursor(rules.get("rule-012"));
-		assertEquals('f', cursor.peek());
+		assertEquals('i', cursor.peek());
+		assertEquals('f', cursor.forward().peek());
 		assertEquals(' ', cursor.forward().peek());
 		
 		cursor = new Cursor(rules.get("empty-rule"));
@@ -118,6 +123,15 @@ public class CursorTest {
 	@Test
 	public void testForward()
 	{
+		Cursor cursor = new Cursor(rules.get("rule-005"));
+		assertEquals('1', cursor.at());
+		assertEquals(cursor, cursor.forward());
+		assertEquals('1', cursor.at());
+		assertEquals('3', cursor.forward().at());
+		assertEquals('4', cursor.forward().at());
+		assertEquals(NIL, cursor.forward().at());
+		assertEquals(NIL, cursor.forward().at());
+		assertEquals(NIL, cursor.forward().at());
 	}
 
 
