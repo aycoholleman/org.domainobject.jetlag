@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author ayco
+ * @author Ayco Holleman
  * @created May 7, 2015
  *
  */

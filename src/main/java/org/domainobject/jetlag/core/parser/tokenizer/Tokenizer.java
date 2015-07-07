@@ -98,7 +98,7 @@ public class Tokenizer {
 	public Token peek(int ahead) throws IllegalCharacterException, TokenExtractionException
 	{
 		if (ahead < 1) {
-			throw new IllegalArgumentException("Argument must be greater than 0");
+			throw new IllegalArgumentException("Parameter must be greater than 0");
 		}
 		if (tokens == null || current == tokens.size()) {
 			return null;

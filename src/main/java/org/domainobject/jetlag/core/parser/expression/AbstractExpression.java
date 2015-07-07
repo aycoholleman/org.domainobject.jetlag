@@ -1,12 +1,14 @@
 package org.domainobject.jetlag.core.parser.expression;
 
-public abstract class AbstractExpression {
-	
-	
-	//private
+import org.domainobject.jetlag.core.parser.tokenizer.Tokenizer;
 
-	public AbstractExpression()
-	{
+public abstract class AbstractExpression {
+
+	protected String rule;
+	protected Tokenizer tokenizer;
+	//protected LibraryDefinition[] lib
+
+	public AbstractExpression() {
 	}
 
 }

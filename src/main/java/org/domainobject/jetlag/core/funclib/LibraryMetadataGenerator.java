@@ -1,5 +1,7 @@
 package org.domainobject.jetlag.core.funclib;
 
+import org.domainobject.jetlag.core.funclib.def.LibraryDefinition;
+
 /**
  * @author ayco
  * @created May 7, 2015
@@ -16,9 +18,9 @@ public final class LibraryMetadataGenerator<T extends AbstractFunctionLibrary> {
 	}
 
 
-	public LibraryMetadata<T> generate()
+	public LibraryDefinition<T> generate()
 	{
-		LibraryMetadata<T> metadata = new LibraryMetadata<>();
+		LibraryDefinition<T> metadata = new LibraryDefinition<>();
 		metadata.setLibraryClass(libClass);
 		return metadata;
 	}

@@ -1,16 +1,18 @@
-package org.domainobject.jetlag.core.funclib;
+package org.domainobject.jetlag.core.funclib.def;
+
+import org.domainobject.jetlag.core.funclib.AbstractFunctionLibrary;
 
 /**
  * @author ayco
  * @created May 7, 2015
  *
  */
-public final class LibraryMetadata<T extends AbstractFunctionLibrary> {
+public final class LibraryDefinition<T extends AbstractFunctionLibrary> {
 
 	private Class<T> libraryClass;
 	private String namespace;
 	private String description;
-	private FunctionMetadata[] functions;
+	private FunctionDefinition[] functions;
 
 
 	public Class<? extends AbstractFunctionLibrary> getLibraryClass()
@@ -49,13 +51,13 @@ public final class LibraryMetadata<T extends AbstractFunctionLibrary> {
 	}
 
 
-	public FunctionMetadata[] getFunctions()
+	public FunctionDefinition[] getFunctions()
 	{
 		return functions;
 	}
 
 
-	public void setFunctions(FunctionMetadata[] functions)
+	public void setFunctions(FunctionDefinition[] functions)
 	{
 		this.functions = functions;
 	}
