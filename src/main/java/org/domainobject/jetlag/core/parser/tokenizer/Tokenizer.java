@@ -17,10 +17,9 @@ public class Tokenizer {
 
 	/**
 	 * Creates a new {@code Tokenizer} for the rule encapsulated by the
-	 * specified {@code Cursor}. As part of the initialization process the
-	 * constructor will attempt to extract the first token from the rule (if
-	 * any) and may therefore throw an {@link IllegalCharacterException} or an
-	 * {@link TokenExtractionException}.
+	 * specified {@link Cursor}. The constructor will attempt to extract the
+	 * first token from the rule (if any) and may therefore throw an
+	 * {@link IllegalCharacterException} or an {@link TokenExtractionException}.
 	 * 
 	 * @param cursor
 	 *            The {@code Cursor} through which to access the rule
@@ -58,7 +57,6 @@ public class Tokenizer {
 		}
 		++current;
 		if (current == 0) {
-			current = 0;
 			return tokens.get(0);
 		}
 		if (current < tokens.size()) {
