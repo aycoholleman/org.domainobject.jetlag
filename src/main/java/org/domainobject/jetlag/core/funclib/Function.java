@@ -22,7 +22,7 @@ public @interface Function {
 	/**
 	 * Provides the name of the function within jetlag's user interface.
 	 * Function names used by the user need not map one-to-one to method names
-	 * in a {@link AbstractFunctionLibrary}.
+	 * in a {@link FunctionLibrary}.
 	 * 
 	 * @return The name of the function within jetlag's user interface
 	 */

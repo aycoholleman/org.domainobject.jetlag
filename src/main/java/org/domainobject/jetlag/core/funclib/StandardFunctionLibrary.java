@@ -8,7 +8,7 @@ import org.domainobject.jetlag.core.runtime.CallInfo;
  *
  */
 @Library(namespace = "std")
-public class StandardFunctionLibrary extends AbstractFunctionLibrary {
+public class StandardFunctionLibrary extends FunctionLibrary {
 
 	public StandardFunctionLibrary()
 	{

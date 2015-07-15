@@ -9,7 +9,7 @@ import org.domainobject.jetlag.core.runtime.TemplateRunner;
  * @created May 6, 2015
  *
  */
-public abstract class AbstractFunctionLibrary {
+public abstract class FunctionLibrary {
 	
 	protected TemplateRunner templateRunner;
 	protected Template template;

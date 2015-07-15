@@ -1,21 +1,24 @@
 package org.domainobject.jetlag.core.funclib.def;
 
-import org.domainobject.jetlag.core.funclib.AbstractFunctionLibrary;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.domainobject.jetlag.core.funclib.FunctionLibrary;
 
 /**
- * @author ayco
+ * @author Ayco Holleman
  * @created May 7, 2015
  *
  */
-public final class LibraryDefinition<T extends AbstractFunctionLibrary> {
+public final class LibraryDefinition<T extends FunctionLibrary> {
 
 	private Class<T> libraryClass;
 	private String namespace;
 	private String description;
-	private FunctionDefinition[] functions;
+	private List<FunctionDefinition> functionDefinitions = new ArrayList<FunctionDefinition>(50);
 
 
-	public Class<? extends AbstractFunctionLibrary> getLibraryClass()
+	public Class<? extends FunctionLibrary> getLibraryClass()
 	{
 		return libraryClass;
 	}
@@ -51,15 +54,21 @@ public final class LibraryDefinition<T extends AbstractFunctionLibrary> {
 	}
 
 
-	public FunctionDefinition[] getFunctions()
+	public List<FunctionDefinition> getFunctionDefinitions()
 	{
-		return functions;
+		return functionDefinitions;
 	}
 
 
-	public void setFunctions(FunctionDefinition[] functions)
+	public void setFunctionDefinitions(List<FunctionDefinition> functionDefinitions)
 	{
-		this.functions = functions;
+		this.functionDefinitions = functionDefinitions;
+	}
+
+
+	public void addFunctionDefinition(FunctionDefinition funcDef)
+	{
+		functionDefinitions.add(funcDef);
 	}
 
 }
