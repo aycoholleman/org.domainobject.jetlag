@@ -1,7 +1,9 @@
 package org.domainobject.jetlag.core.funclib.def;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.domainobject.jetlag.core.funclib.FunctionLibrary;
 
@@ -16,6 +18,7 @@ public final class LibraryDefinition<T extends FunctionLibrary> {
 	private String namespace;
 	private String description;
 	private List<FunctionDefinition> functionDefinitions = new ArrayList<FunctionDefinition>(50);
+	private Map<String, FunctionDefinition> funcDefsPerUiName = new HashMap<>();
 
 
 	public Class<? extends FunctionLibrary> getLibraryClass()
@@ -54,21 +57,15 @@ public final class LibraryDefinition<T extends FunctionLibrary> {
 	}
 
 
-	public List<FunctionDefinition> getFunctionDefinitions()
-	{
-		return functionDefinitions;
-	}
-
-
-	public void setFunctionDefinitions(List<FunctionDefinition> functionDefinitions)
-	{
-		this.functionDefinitions = functionDefinitions;
-	}
-
-
 	public void addFunctionDefinition(FunctionDefinition funcDef)
 	{
-		functionDefinitions.add(funcDef);
+		funcDefsPerUiName.put(funcDef.getUiName(), funcDef);
+	}
+
+
+	public FunctionDefinition getFunctionDefinition(String uiName)
+	{
+		return funcDefsPerUiName.get(uiName);
 	}
 
 }

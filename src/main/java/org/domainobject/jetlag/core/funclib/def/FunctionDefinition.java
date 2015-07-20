@@ -1,5 +1,8 @@
 package org.domainobject.jetlag.core.funclib.def;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.domainobject.jetlag.core.funclib.FunctionLibrary;
 
 /**
@@ -15,6 +18,7 @@ public final class FunctionDefinition {
 	private boolean callStatic;
 	private String methodName;
 	private String uiName;
+	private Set<FunctionDefinition> overloads;
 
 
 	/**
@@ -66,6 +70,15 @@ public final class FunctionDefinition {
 	public void setUiName(String uiName)
 	{
 		this.uiName = uiName;
+	}
+
+
+	public void overload(FunctionDefinition funcDef)
+	{
+		if (overloads == null) {
+			overloads = new HashSet<FunctionDefinition>(4);
+		}
+		overloads.add(funcDef);
 	}
 
 }

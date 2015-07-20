@@ -88,12 +88,26 @@ public final class LibraryDefinitionFactory<T extends FunctionLibrary> {
 			throw new MethodNotPublicException(method);
 		}
 		Function fnc = method.getAnnotation(Function.class);
-		if(isSet(fnc.uiName())) {
-			if(isSet(fnc.ref())) {
-				String fmt = "Method %s (%s): uiName attribute and ref attribute must not both be set in @Function annotation";
+		if (isSet(fnc.uiName())) {
+			if (isSet(fnc.ref())) {
+				String fmt = "Method %s (%s): uiName and ref must not both be set in @Function annotation";
 				String msg = String.format(fmt, method.getName(), libClass.getName());
 				throw new FunctionDefinitionException(msg);
 			}
+		}
+		else {
+			if (empty(fnc.ref())) {
+				String fmt = "Method %s (%s): either uiName or ref must be set in @Function annotation";
+				String msg = String.format(fmt, method.getName(), libClass.getName());
+				throw new FunctionDefinitionException(msg);
+			}
+			FunctionDefinition base = libDef.getFunctionDefinition(fnc.ref());
+			if (base == null) {
+				String fmt = "Method %s (%s): ref attribute in @Function annotation specifies a non-existing function: \"%s\".";
+				String msg = String.format(fmt, method.getName(), libClass.getName(), fnc.ref());
+				throw new FunctionDefinitionException(msg);
+			}
+			//base.overload(funcDef);
 		}
 		FunctionDefinition funcDef = new FunctionDefinition();
 		funcDef.setUiName(fnc.uiName());
