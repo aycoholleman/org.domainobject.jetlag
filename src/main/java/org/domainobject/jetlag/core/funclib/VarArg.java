@@ -7,15 +7,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The {@code Parameter} annotation is used to describe a parameter of a Jetlag
+ * The {@code Var} annotation is used to describe a parameter of a Jetlag
  * function.
  * 
  * @author Ayco Holleman
  */
-@Repeatable(Parameters.class)
+@Repeatable(VarArgs.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Parameter {
+public @interface VarArg {
 
 	/**
 	 * The name of the parameter as it must appear in the user interface.
@@ -29,13 +29,13 @@ public @interface Parameter {
 	 * 
 	 * @return
 	 */
-	String value();
+	String description();
 
 }
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
-@interface Parameters {
+@interface VarArgs {
 
-	Parameter[] value();
+	VarArg[] value();
 }

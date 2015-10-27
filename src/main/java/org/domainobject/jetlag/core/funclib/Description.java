@@ -8,16 +8,16 @@ import java.lang.annotation.Target;
 
 /**
  * @author Ayco Holleman
- * @created May 7, 2015
- *
  */
 @Repeatable(Descriptions.class)
 public @interface Description {
+
 	String value();
 }
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @interface Descriptions {
+
 	Description[] value();
 }
