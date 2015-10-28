@@ -12,10 +12,10 @@ import java.lang.annotation.Target;
  * 
  * @author Ayco Holleman
  */
-@Repeatable(Parameters.class)
+@Repeatable(Params.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Parameter {
+public @interface Param {
 
 	/**
 	 * The name of the parameter as it must appear in the user interface.
@@ -35,7 +35,7 @@ public @interface Parameter {
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
-@interface Parameters {
+@interface Params {
 
-	Parameter[] value();
+	Param[] value();
 }
