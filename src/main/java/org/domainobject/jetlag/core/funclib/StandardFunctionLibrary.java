@@ -1,7 +1,7 @@
 package org.domainobject.jetlag.core.funclib;
 
-import org.domainobject.jetlag.core.funclib.vararg.StringIntVarArg;
 import org.domainobject.jetlag.core.runtime.CallInfo;
+import org.domainobject.jetlag.core.util.tuple.StringInt;
 
 /**
  * @author Ayco Holleman
@@ -39,11 +39,21 @@ public class StandardFunctionLibrary extends FunctionLibrary {
 		return input.substring(from, to);
 	}
 
-	@Function(uiName = "translate")
+	public static Integer map(CallInfo callInfo, String input, StringInt[] varargs)
+	{
+		for (StringInt arg : varargs) {
+			if (input.equals(arg.string)) {
+				return arg.integer;
+			}
+		}
+		return null;
+	}
+
+	@Function()
 	@Description("Map strings to numbers.")
 	@Param("The string to map")
 	@VarArgsParam(
-			factoryClass = StringIntVarArg.class,
+			factoryClass = StringInt.class,
 			factoryMethod = "test",
 			varArgs = {
 					@VarArg(uiName = "match_candidate",
@@ -53,10 +63,11 @@ public class StandardFunctionLibrary extends FunctionLibrary {
 			})
 	@Param(uiName = "default_output",
 			value = "The number to output if the input did not match any of the match candidates")
-	public static int map(CallInfo callInfo, String input, StringIntVarArg[] varargs,
+	@Return("")
+	public static int map(CallInfo callInfo, String input, StringInt[] varargs,
 			int dfault)
 	{
-		for (StringIntVarArg arg : varargs) {
+		for (StringInt arg : varargs) {
 			if (input.equals(arg.string)) {
 				return arg.integer;
 			}

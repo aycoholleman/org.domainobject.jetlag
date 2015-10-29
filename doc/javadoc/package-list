@@ -1,0 +1,12 @@
+org.domainobject.jetlag.core.funclib
+org.domainobject.jetlag.core.funclib.def
+org.domainobject.jetlag.core.funclib.vararg
+org.domainobject.jetlag.core.model
+org.domainobject.jetlag.core.parser
+org.domainobject.jetlag.core.parser.expression
+org.domainobject.jetlag.core.parser.tokenizer
+org.domainobject.jetlag.core.runtime
+org.domainobject.test.foo
+org.domainobject.util
+org.domainobject.util.convert
+org.domainobject.util.debug
