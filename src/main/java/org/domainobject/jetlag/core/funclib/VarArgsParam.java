@@ -65,7 +65,7 @@ import java.lang.annotation.Target;
  * @author Ayco Holleman
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({ ElementType.METHOD, ElementType.FIELD })
 public @interface VarArgsParam {
 
 	/**

@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  */
 @Repeatable(VarArgs.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({ ElementType.METHOD, ElementType.FIELD })
 public @interface VarArg {
 
 	/**
@@ -23,6 +23,8 @@ public @interface VarArg {
 	 * @return
 	 */
 	String uiName() default "";
+
+	Class<?> type() default void.class;
 
 	/**
 	 * The description of the parameter.

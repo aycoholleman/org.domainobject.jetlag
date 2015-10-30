@@ -1,24 +1,24 @@
 package org.domainobject.jetlag.core.util.tuple;
 
 /**
- * A String-int tuple.
+ * A double-int tuple.
  * 
  * @author Ayco Holleman
  */
-public final class StringInt {
+public final class DoubleInt {
 
-	private final String s;
+	private final double d;
 	private final int i;
 
-	public StringInt(String s, int i)
+	public DoubleInt(double d, int i)
 	{
-		this.s = s;
+		this.d = d;
 		this.i = i;
 	}
 
-	public String getString()
+	public double getDouble()
 	{
-		return s;
+		return d;
 	}
 
 	public int getInt()
