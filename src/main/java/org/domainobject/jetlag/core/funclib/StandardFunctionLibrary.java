@@ -23,15 +23,34 @@ public class StandardFunctionLibrary extends FunctionLibrary {
 			descr = "The string to extract a slice from",
 			presence = THIS_IF_ABSENT)
 	@Param(uiName = "from",
-			descr = "The position of the first character of the slice.")
+			descr = "The position of the first character of the slice")
 	@Param(uiName = "to",
-			descr = "The position of the last character of the slice.")
+			descr = "The position of the last character of the slice",
+			presence = DEFAULT_IF_ABSENT,
+			defaultValue = "The position of the last character of the input "
+					+ "string (i.e. until the end of the input string)")
 	@Return("A slice from the supplied string")
 	private static String substr;
 
 	@Function()
-	@Description("Map a value to an integer.")
-	@Param(uiName = "input", descr = "The value to map.", presence = THIS_IF_ABSENT)
+	@Description("Maps a value to an integer.")
+	@Param(uiName = "input",
+			descr = "The value to map",
+			presence = THIS_IF_ABSENT)
+	@VarArgsParam(
+			varArgs =
+			{
+					@VarArg(uiName = "match_candidate",
+							description = "A value to compare the input value with"),
+					@VarArg(uiName = "output",
+							description = "The integer to output if the input value "
+									+ "was equal to the match candidate")
+			})
+	@Param(uiName = "default",
+			descr = "The integer to output if the input did not match any of the "
+					+ "match candidates",
+			presence = DEFAULT_IF_ABSENT,
+			defaultValue = "null")
 	private static int map_to_int;
 
 	public String substr(CallInfo callInfo, int from)
@@ -61,24 +80,10 @@ public class StandardFunctionLibrary extends FunctionLibrary {
 		return null;
 	}
 
-	@Function()
-	@Description("Map strings to numbers.")
-	@Param(descr = "The string to map")
-	@VarArgsParam(
+	@VarArgsDefinition(
 			factoryClass = StringInt.class,
-			factoryMethod = "test",
-			varArgs =
-			{
-					@VarArg(uiName = "match_candidate",
-							type = String.class,
-							description = "The string to compare the input string with"),
-					@VarArg(uiName = "output",
-							type = int.class,
-							description = "The number to output if the input string was equal to the match candidate")
-			})
-	@Param(uiName = "default_output",
-			descr = "The number to output if the input did not match any of the match candidates")
-	@Return("")
+			factoryMethod = "valueOf",
+			userSignature = { String.class, int.class })
 	public static int mapToInt(CallInfo callInfo, String input, StringInt[] varargs,
 			int dfault)
 	{
