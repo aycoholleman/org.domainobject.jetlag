@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import org.domainobject.jetlag.core.funclib.Function;
+import org.domainobject.jetlag.core.funclib.Declare;
 import org.domainobject.jetlag.core.funclib.FunctionLibrary;
 import org.domainobject.jetlag.core.funclib.Library;
 
@@ -55,7 +55,7 @@ public final class LibraryDefinitionFactory<T extends FunctionLibrary> {
 		Method[] methods = libClass.getDeclaredMethods();
 		ArrayList<Method> annotated = new ArrayList<>(methods.length);
 		for (Method method : methods) {
-			if (method.getAnnotation(Function.class) != null) {
+			if (method.getAnnotation(Declare.class) != null) {
 				annotated.add(method);
 			}
 		}
@@ -68,8 +68,8 @@ public final class LibraryDefinitionFactory<T extends FunctionLibrary> {
 			@Override
 			public int compare(Method m1, Method m2)
 			{
-				Function fnc1 = m1.getAnnotation(Function.class);
-				Function fnc2 = m1.getAnnotation(Function.class);
+				Declare fnc1 = m1.getAnnotation(Declare.class);
+				Declare fnc2 = m1.getAnnotation(Declare.class);
 				if (isSet(fnc1.uiName())) {
 					if (isSet(fnc2.uiName())) {
 						return 0;
@@ -87,7 +87,7 @@ public final class LibraryDefinitionFactory<T extends FunctionLibrary> {
 		if (!Modifier.isPublic(method.getModifiers())) {
 			throw new MethodNotPublicException(method);
 		}
-		Function fnc = method.getAnnotation(Function.class);
+		Declare fnc = method.getAnnotation(Declare.class);
 		if (isSet(fnc.uiName())) {
 			if (isSet(fnc.ref())) {
 				String fmt = "Method %s (%s): uiName and ref must not both be set in @Function annotation";

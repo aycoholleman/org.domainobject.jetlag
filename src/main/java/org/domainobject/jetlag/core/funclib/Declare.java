@@ -23,8 +23,8 @@ import java.lang.annotation.Target;
  * @author Ayco Holleman
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD })
-public @interface Function {
+@Target({ ElementType.FIELD })
+public @interface Declare {
 
 	/**
 	 * Provides the name of the function within user interface. Function names

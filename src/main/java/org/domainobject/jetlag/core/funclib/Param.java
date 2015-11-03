@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  */
 @Repeatable(Params.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD })
+@Target({ ElementType.FIELD })
 public @interface Param {
 
 	/**
@@ -26,27 +26,21 @@ public @interface Param {
 	String uiName() default "";
 
 	/**
-	 * Whether or not this is a required parameter. Alternatively, the parameter
-	 * is optional and the current value of the field from which the function is
-	 * called is used instead ({@link ParamPresence#THIS_IF_ABSENT
-	 * THIS_IF_ABSENT}). Or the parameter is optional and an
-	 * implementation-defined default is used (
-	 * {@link ParamPresence#DEFAULT_IF_ABSENT DEFAULT_IF_ABSENT}). Only one
-	 * parameter is allowed to be ({@link ParamPresence#THIS_IF_ABSENT
-	 * THIS_IF_ABSENT}).
+	 * Whether or not this has a default value (i&#46;e&#46; whether or not it
+	 * is a required parameter).
 	 * 
 	 * @return
 	 */
-	ParamPresence presence() default ParamPresence.REQUIRED;
+	Default dfault() default Default.NONE;
 
 	/**
 	 * The default value, or a description of the default value for an optional
-	 * pamater. This attribute should only be provided if {@link #presence()} is
-	 * {@link ParamPresence#DEFAULT_IF_ABSENT DEFAULT_IF_ABSENT}).
+	 * paramater. This attribute should only be provided if {@link #dfault()} is
+	 * set to {@link Default#AUTO AUTO}). It is ignored otherwise.
 	 * 
 	 * @return
 	 */
-	String defaultValue() default "";
+	String autoValue() default "";
 
 	/**
 	 * The description of the parameter.
@@ -58,7 +52,7 @@ public @interface Param {
 }
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD })
+@Target({ ElementType.FIELD })
 @interface Params {
 
 	Param[] value();

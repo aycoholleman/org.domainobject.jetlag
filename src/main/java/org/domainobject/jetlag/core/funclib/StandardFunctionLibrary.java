@@ -4,7 +4,7 @@ import org.domainobject.jetlag.core.runtime.CallInfo;
 import org.domainobject.jetlag.core.util.tuple.DoubleInt;
 import org.domainobject.jetlag.core.util.tuple.StringInt;
 
-import static org.domainobject.jetlag.core.funclib.ParamPresence.*;
+import static org.domainobject.jetlag.core.funclib.Default.*;
 
 /**
  * @author Ayco Holleman
@@ -17,26 +17,26 @@ public class StandardFunctionLibrary extends FunctionLibrary {
 		super();
 	}
 
-	@Function()
+	@Declare()
 	@Description("Extracts a slice from a string.")
 	@Param(uiName = "input",
 			descr = "The string to extract a slice from",
-			presence = THIS_IF_ABSENT)
+			dfault = THIS)
 	@Param(uiName = "from",
 			descr = "The position of the first character of the slice")
 	@Param(uiName = "to",
 			descr = "The position of the last character of the slice",
-			presence = DEFAULT_IF_ABSENT,
-			defaultValue = "The position of the last character of the input "
+			dfault = AUTO,
+			autoValue = "The position of the last character of the input "
 					+ "string (i.e. until the end of the input string)")
 	@Return("A slice from the supplied string")
 	private static String substr;
 
-	@Function()
+	@Declare()
 	@Description("Maps a value to an integer.")
 	@Param(uiName = "input",
 			descr = "The value to map",
-			presence = THIS_IF_ABSENT)
+			dfault = THIS)
 	@VarArgsParam(
 			varArgs =
 			{
@@ -49,8 +49,8 @@ public class StandardFunctionLibrary extends FunctionLibrary {
 	@Param(uiName = "default",
 			descr = "The integer to output if the input did not match any of the "
 					+ "match candidates",
-			presence = DEFAULT_IF_ABSENT,
-			defaultValue = "null")
+			dfault = AUTO,
+			autoValue = "null")
 	private static int map_to_int;
 
 	public String substr(CallInfo callInfo, int from)
