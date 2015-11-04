@@ -24,8 +24,6 @@ public @interface VarArg {
 	 */
 	String uiName() default "";
 
-	Class<?> type() default void.class;
-
 	/**
 	 * The description of the parameter.
 	 * 

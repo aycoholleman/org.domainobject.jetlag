@@ -18,16 +18,15 @@ import java.lang.annotation.Target;
 public @interface Param {
 
 	/**
-	 * The name of the parameter as it must appear in the user interface.
-	 * Defaults to the name of the field to which this annotation was added.
+	 * The Jetlage user interface name of the parameter.
 	 * 
 	 * @return
 	 */
-	String uiName() default "";
+	String uiName();
 
 	/**
-	 * Whether or not this has a default value (i&#46;e&#46; whether or not it
-	 * is a required parameter).
+	 * Whether or not the parameter has a default value (i&#46;e&#46; whether or
+	 * not it is a required parameter).
 	 * 
 	 * @return
 	 */

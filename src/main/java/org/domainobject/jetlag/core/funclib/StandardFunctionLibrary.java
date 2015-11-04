@@ -10,7 +10,7 @@ import static org.domainobject.jetlag.core.funclib.Default.*;
  * @author Ayco Holleman
  */
 @Library(namespace = "std")
-public class StandardFunctionLibrary extends FunctionLibrary {
+public final class StandardFunctionLibrary extends FunctionLibrary {
 
 	public StandardFunctionLibrary()
 	{
@@ -80,8 +80,7 @@ public class StandardFunctionLibrary extends FunctionLibrary {
 		return null;
 	}
 
-	@VarArgsDefinition(
-			factoryClass = StringInt.class,
+	@VarArgsDefinition(factoryClass = StringInt.class,
 			factoryMethod = "valueOf",
 			userSignature = { String.class, int.class })
 	public static int mapToInt(CallInfo callInfo, String input, StringInt[] varargs,
