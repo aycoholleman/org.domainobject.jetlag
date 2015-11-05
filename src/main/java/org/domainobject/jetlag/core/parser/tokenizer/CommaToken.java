@@ -7,18 +7,16 @@ class CommaToken extends Token {
 		super(cursor);
 	}
 
-
 	@Override
 	public TokenType getType()
 	{
 		return TokenType.COMMA;
 	}
 
-
 	@Override
 	String doExtract() throws TokenExtractionException
 	{
-		// Move cursor past token as per the contract
+		// Move cursor past comma
 		cursor.forward();
 		return ",";
 	}

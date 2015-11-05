@@ -5,4 +5,6 @@ package org.domainobject.jetlag.core.funclib.def;
  */
 public final class ParamDef {
 
+	private String uiName;
+
 }
