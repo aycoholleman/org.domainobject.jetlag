@@ -8,12 +8,12 @@ import java.util.HashMap;
 import org.domainobject.util.FileUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class TokenizerTest {
 
 	private static HashMap<String, String> rules = new HashMap<>();
-
 
 	@BeforeClass
 	public static void init() throws URISyntaxException
@@ -27,8 +27,8 @@ public class TokenizerTest {
 		}
 	}
 
-
 	@Test
+	@SuppressWarnings("static-method")
 	public void testNextToken()
 	{
 
@@ -62,8 +62,8 @@ public class TokenizerTest {
 
 	}
 
-
 	@Test
+	@SuppressWarnings("static-method")
 	public void testPeek()
 	{
 		String rule12 = rules.get("rule-012");
@@ -96,23 +96,26 @@ public class TokenizerTest {
 		}
 	}
 
-
 	@Test
+	@SuppressWarnings("static-method")
 	public void testPeek__int()
 	{
 		String rule12 = rules.get("rule-012");
 		try {
 			Tokenizer tokenizer = new Tokenizer(new Cursor(rule12));
-			assertTrue(tokenizer.peek(1).data().equals("("));
-			assertTrue(tokenizer.peek(2).data().equals("name"));
-			assertTrue(tokenizer.peek(3).data().equals("="));
-			assertTrue(tokenizer.peek(4).data().equals("John Smith"));
-			assertTrue(tokenizer.peek(5).data().equals(","));
-			assertTrue(tokenizer.peek(6).data().equals("Manager"));
-			assertTrue(tokenizer.peek(7).data().equals(","));
-			assertTrue(tokenizer.peek(8).data().equals("Employee"));
-			assertTrue(tokenizer.peek(9).data().equals(")"));
-			assertTrue(tokenizer.peek(10) == null);
+			assertTrue(tokenizer.peek(-1) == null);
+			assertTrue(tokenizer.peek(0) == null);
+			assertTrue(tokenizer.peek(1).data().equals("if"));
+			assertTrue(tokenizer.peek(2).data().equals("("));
+			assertTrue(tokenizer.peek(3).data().equals("name"));
+			assertTrue(tokenizer.peek(4).data().equals("="));
+			assertTrue(tokenizer.peek(5).data().equals("John Smith"));
+			assertTrue(tokenizer.peek(6).data().equals(","));
+			assertTrue(tokenizer.peek(7).data().equals("Manager"));
+			assertTrue(tokenizer.peek(8).data().equals(","));
+			assertTrue(tokenizer.peek(9).data().equals("Employee"));
+			assertTrue(tokenizer.peek(10).data().equals(")"));
+			assertTrue(tokenizer.peek(11) == null);
 		}
 		catch (IllegalCharacterException | TokenExtractionException e) {
 			fail("Exception not expected: " + e);

@@ -3,20 +3,21 @@ package org.domainobject.jetlag.core.parser.tokenizer;
 import java.util.ArrayList;
 
 /**
+ * Tokenizes a rule and enables you to scroll through the tokens.
+ * 
  * @author Ayco Holleman
  */
 public class Tokenizer {
 
-	private final TokenExtractor extractor;
-	private final ArrayList<Token> tokens;
-
-	private int current = -1;
+	private TokenExtractor extractor;
+	private ArrayList<Token> tokens;
+	private int ptr = -1;
 
 	/**
-	 * Creates a new {@code Tokenizer} for the rule encapsulated by the
-	 * specified {@link Cursor}. The constructor will attempt to extract the
-	 * first token from the rule (if any) and may therefore throw an
-	 * {@link IllegalCharacterException} or an {@link TokenExtractionException}.
+	 * Creates a tokenizer for the rule encapsulated by the specified
+	 * {@link Cursor}. The constructor will immediately extract and cache all
+	 * tokens from the rule and may therefore throw a
+	 * {@link IllegalCharacterException} or a {@link TokenExtractionException}.
 	 * 
 	 * @param cursor
 	 *            The {@code Cursor} through which to access the rule
@@ -26,82 +27,81 @@ public class Tokenizer {
 	public Tokenizer(Cursor cursor) throws IllegalCharacterException, TokenExtractionException
 	{
 		extractor = new TokenExtractor(cursor);
-		Token token = extractor.nextToken();
-		if (token == null) {
-			tokens = null;
-		}
-		else {
-			tokens = new ArrayList<>();
-			tokens.add(token);
-		}
-	}
-
-	public Token at()
-	{
-		if (tokens == null || current == tokens.size())
-			return null;
-		if (current == -1)
-			return tokens.get(0);
-		return tokens.get(current);
+		tokens = new ArrayList<>();
+		while (extractor.hasMoreTokens())
+			tokens.add(extractor.nextToken());
 	}
 
 	/**
-	 * Retrieve the next token from the rule.
+	 * Returns the total number of tokens in the rule.
+	 * 
+	 * @return The total number of tokens in the rule
+	 */
+	public int numTokens()
+	{
+		return tokens.size();
+	}
+
+	/**
+	 * Whether or not there are more tokens to be extracted.
+	 * 
+	 * @return Whether or not there are more tokens to be extracted
+	 */
+	public boolean hasMoreTokens()
+	{
+		return (ptr + 1) < tokens.size();
+	}
+
+	/**
+	 * Returns the token currently pointed at by the tokenizer.
+	 * 
+	 * @return The token currently pointed at by the tokenizer
+	 */
+	public Token at()
+	{
+		if (tokens.size() > 0 && ptr != -1)
+			return tokens.get(ptr);
+		return null;
+	}
+
+	/**
+	 * Retrieves the next token from the rule.
 	 * 
 	 * @return The next token from the rule or {@code null} in case of an empty
 	 *         rule or if there are no more tokens to be extracted from the rule
-	 * @throws IllegalCharacterException
-	 * @throws TokenExtractionException
 	 */
-	public Token nextToken() throws IllegalCharacterException, TokenExtractionException
+	public Token nextToken()
 	{
-		if (tokens == null || current == tokens.size())
-			return null;
-		++current;
-		if (current == 0)
-			return tokens.get(0);
-		if (current < tokens.size())
-			// Tokens already retrieved through peek()
-			return tokens.get(current);
-		Token token = extractor.nextToken();
-		if (token != null)
-			tokens.add(token);
-		return token;
+		if (hasMoreTokens())
+			return tokens.get(++ptr);
+		return null;
 	}
 
-	public Token peek() throws IllegalCharacterException, TokenExtractionException
+	/**
+	 * Peeks one token ahead in the token stream without moving the token
+	 * pointer.
+	 * 
+	 * @return
+	 */
+	public Token peek()
 	{
-		if (tokens == null || current == tokens.size())
-			return null;
-		if (current == -1)
-			return tokens.get(0);
-		if (current + 1 < tokens.size())
-			return tokens.get(current + 1);
-		Token token = extractor.nextToken();
-		if (token == null)
-			return null;
-		tokens.add(token);
-		return token;
+		return peek(1);
 	}
 
-	public Token peek(int ahead) throws IllegalCharacterException, TokenExtractionException
+	/**
+	 * Peeks the specified number of tokens ahead in the token stream without
+	 * moving the token pointer. You can specify negative numbers to look back
+	 * into the token stream.
+	 * 
+	 * @param ahead
+	 * @return
+	 */
+	public Token peek(int ahead)
 	{
-		if (ahead < 1)
-			throw new IllegalArgumentException("Parameter must be greater than 0");
-		if (tokens == null || current == tokens.size())
-			return null;
-		int curr = current == -1 ? 0 : current;
-		if (curr + ahead < tokens.size())
-			return tokens.get(curr + ahead);
-		int newSize = curr + ahead + 1;
-		Token token = null;
-		while (tokens.size() < newSize) {
-			token = extractor.nextToken();
-			if (token == null)
-				break;
-			tokens.add(token);
-		}
-		return token;
+		int i = ptr + ahead;
+		if (i >= 0 && i < tokens.size())
+			return tokens.get(i);
+		return null;
 	}
 
 }

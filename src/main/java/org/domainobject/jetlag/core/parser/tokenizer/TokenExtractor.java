@@ -12,19 +12,15 @@ import org.domainobject.jetlag.core.parser.Operator;
  * Identifies and extracts tokens from a rule.
  * 
  * @author Ayco Holleman
- * @created Apr 26, 2015
- *
  */
 class TokenExtractor {
 
 	private final Cursor cursor;
 
-
 	TokenExtractor(Cursor cursor)
 	{
 		this.cursor = cursor;
 	}
-
 
 	Token nextToken() throws IllegalCharacterException, TokenExtractionException
 	{
@@ -54,13 +50,11 @@ class TokenExtractor {
 		return token;
 	}
 
-
 	boolean hasMoreTokens()
 	{
 		skipWhitespace();
 		return !cursor.at(NIL);
 	}
-
 
 	private void skipWhitespace()
 	{
@@ -72,18 +66,18 @@ class TokenExtractor {
 			else if (isCommentStart())
 				do {
 					cursor.forward();
-				} while (!isCommentEnd());
+				}
+				while (!isCommentEnd());
 			else
 				break;
 		}
 	}
 
-
 	private boolean isCommentStart()
 	{
-		return cursor.at('#') && (cursor.position() == 0 || cursor.prev() == LF || cursor.prev() == CR);
+		return cursor.at('#')
+				&& (cursor.position() == 0 || cursor.prev() == LF || cursor.prev() == CR);
 	}
-
 
 	private boolean isCommentEnd()
 	{
