@@ -1,10 +1,9 @@
 package org.domainobject.jetlag.core.compiler.tokenizer;
 
 /**
- * Base class of all tokens.
+ * Base class of all types of tokens.
  * 
  * @author Ayco Holleman
- * @created Apr 25, 2015
  *
  */
 public abstract class Token {
@@ -17,10 +16,9 @@ public abstract class Token {
 	private String data;
 	private int end;
 
-
 	/**
-	 * Create a {@code Token} that extracts a data from the specified rule
-	 * starting from the specified position ({@code start}).
+	 * Create a {@code Token} that extracts a data from the specified rule starting from
+	 * the specified position ({@code start}).
 	 * 
 	 * @param rule
 	 *            The rule to extract the token from
@@ -34,16 +32,14 @@ public abstract class Token {
 		this.line = cursor.line();
 	}
 
-
 	/**
-	 * Get the type of the token. Since subclasses of {@code Token} only have
-	 * package visibility, calling this method is the only way to figure out the
-	 * actual type of the token.
+	 * Get the type of the token. Since subclasses of {@code Token} only have package
+	 * visibility, calling this method is the only way to figure out the actual type of
+	 * the token.
 	 * 
 	 * @return The type of the data
 	 */
-	public abstract TokenType getType();
-
+	public abstract TokenType type();
 
 	public final void extract() throws TokenExtractionException
 	{
@@ -51,16 +47,13 @@ public abstract class Token {
 		end = cursor.position();
 	}
 
-
 	/*
-	 * Method implementing the actual extraction logic. Subclasses are expected
-	 * to move the cursor to the character just after the last character of the
-	 * token, even if that means moving it beyond the end of the rule.
-	 * Subclasses can and must assume that the cursor points at the first
-	 * character of the token.
+	 * Method implementing the actual extraction logic. Subclasses are expected to move
+	 * the cursor to the character just after the last character of the token, even if
+	 * that means moving it beyond the end of the rule. Subclasses can and must assume
+	 * that the cursor points at the first character of the token.
 	 */
 	abstract String doExtract() throws TokenExtractionException;
-
 
 	/**
 	 * Get the data index of the first character of the data.
@@ -72,7 +65,6 @@ public abstract class Token {
 		return start;
 	}
 
-
 	/**
 	 * Get the line number of the first character of the data.
 	 * 
@@ -83,10 +75,9 @@ public abstract class Token {
 		return line;
 	}
 
-
 	/**
-	 * Get the data index right <i>after</i> the last character of the data, or
-	 * the index at which data extraction encountered an error.
+	 * Get the data index right <i>after</i> the last character of the data, or the index
+	 * at which data extraction encountered an error.
 	 * 
 	 * @return The data index right after the last character of the token
 	 */
@@ -94,7 +85,6 @@ public abstract class Token {
 	{
 		return end;
 	}
-
 
 	/**
 	 * Get the {@code String} extracted by this {@code Token} instance. If the
@@ -105,17 +95,15 @@ public abstract class Token {
 	 */
 	public String data()
 	{
-		if (data == null) {
+		if (data == null)
 			throw new IllegalStateException("Token not extracted yet");
-		}
 		return data;
 	}
 
-
 	/**
-	 * Returns a {@code String} representation of this {@code Token}.
+	 * Returns a string representation of this token.
 	 * 
-	 * @return The {@code String} representation of this token
+	 * @return The string representation of this token
 	 */
 	@Override
 	public String toString()

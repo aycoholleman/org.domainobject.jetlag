@@ -1,19 +1,17 @@
-package org.domainobject.jetlag.core.compiler.expression;
+package org.domainobject.jetlag.core.compiler.parser;
 
 import org.domainobject.jetlag.core.compiler.tokenizer.Token;
 
-public class TerminalParser extends AbstractParser {
+public class Terminal extends AbstractExpression {
 
-	public TerminalParser()
-	{
-	}
+	private Token terminal;
 
 	@Override
-	public void parse(AbstractParser firstOperand)
+	public void parse()
 	{
 		Token token = tokenizer.at();
 		String data = token.data();
-		switch (token.getType()) {
+		switch (token.type()) {
 			case COMMA:
 				break;
 			case DOUBLE_QUOTED_STRING:
@@ -32,13 +30,16 @@ public class TerminalParser extends AbstractParser {
 				if (data.equals("false") || data.equals("true")) {
 					this.type = ExpressionType.TERMINAL_BOOLEAN;
 				}
-				else if (data.equals("")) {
+				else if (data.equals("null")) {
 					this.type = ExpressionType.TERMINAL_NULL;
+				}
+				else if (data.equals("not")) {
+					this.type = ExpressionType.TERMINAL_BOOLEAN;
 				}
 				break;
 			default:
 				break;
-
 		}
 	}
+
 }

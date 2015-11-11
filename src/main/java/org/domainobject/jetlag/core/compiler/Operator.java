@@ -2,23 +2,23 @@ package org.domainobject.jetlag.core.compiler;
 
 import java.util.Arrays;
 
-public enum Operator
-{
+public enum Operator {
 
 	/* Arithmetic operators */
 	ADD("+"), SUBTRACT("-"), MULTIPLY("*"), DIVIDE("/"), MODULO("%"),
 	/* Boolean operators */
-	AND("&&"), OR("||"), NOT("!"),	
+	AND("&&"), OR("||"), NOT("!"),
 	/* Comparison operators */
-	EQUALS("=", "=="), NOTEQUALS("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),	
+	EQUALS("="), NOTEQUALS("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),
 	/* String operators */
-	STRCONCAT("&", "+"),	
+	STRCONCAT("&"),
 	/* Assignment operator */
-	ASSIGN(":=", "="),	
+	ASSIGN(":="),
 	/* Library namespace operator */
 	NAMESPACE("->", null);
 
-	private static final char[] startChars = new char[] { '+', '-', '*', '%', '/', '&', '|', '!', '=', '<', '>', ':' };
+	private static final char[] startChars = new char[] { '+', '-', '*', '%', '/', '&', '|', '!',
+			'=', '<', '>', ':' };
 	private static final String[] symbols = new String[Operator.values().length];
 	private static final Operator[] opsAlphabetical = new Operator[Operator.values().length];
 
@@ -31,15 +31,13 @@ public enum Operator
 		}
 	}
 
-
 	/**
-	 * Look up the {@code Operator} enum value corresponding to the specified
-	 * symbol.
+	 * Look up the {@code Operator} enum value corresponding to the specified symbol.
 	 * 
 	 * @param symbol
 	 *            The symbol to look up
-	 * @return The {@code Operator} or {@code null} if the argument to this
-	 *         method is not a valid operator
+	 * @return The {@code Operator} or {@code null} if the argument to this method is not
+	 *         a valid operator
 	 */
 	public static Operator forSymbol(String symbol)
 	{
@@ -47,14 +45,13 @@ public enum Operator
 		return i < 0 ? null : opsAlphabetical[i];
 	}
 
-
 	/**
 	 * Is the specified character the first character of at least one operator?
 	 * 
 	 * @param c
 	 *            The character to test
-	 * @return Whether or not the character is the first character of at least
-	 *         one operator
+	 * @return Whether or not the character is the first character of at least one
+	 *         operator
 	 */
 	public static boolean isOperatorStart(char c)
 	{
@@ -64,20 +61,17 @@ public enum Operator
 	private final String symbol;
 	private final String javaSymbol;
 
-
 	private Operator(String symbol)
 	{
 		this.symbol = symbol;
 		this.javaSymbol = symbol;
 	}
 
-
 	private Operator(String symbol, String javaSymbol)
 	{
 		this.symbol = symbol;
 		this.javaSymbol = javaSymbol;
 	}
-
 
 	/**
 	 * Get the symbol (i.e. character sequence) for this operator
@@ -89,29 +83,53 @@ public enum Operator
 		return symbol;
 	}
 
-
 	/**
 	 * Get the Java translation for this operator
 	 * 
-	 * @return The Java translation for this operator, or {@code null} if this
-	 *         operator has no equivalent in Java.
+	 * @return The Java translation for this operator, or {@code null} if this operator
+	 *         has no equivalent in Java.
 	 */
 	public String getJavaSymbol()
 	{
 		return javaSymbol;
 	}
 
+	public boolean isLogicalOperator()
+	{
+		return this == AND || this == OR;
+	}
+
+	public boolean isAssignmentOperator()
+	{
+		return this == ASSIGN;
+	}
+
+	/**
+	 * Whether or not this {@code Operator} is a comparison operator.
+	 * 
+	 * @return Whether or not this {@code Operator} is an arithmetic operator
+	 */
+	public boolean isComparisonOperator()
+	{
+		return this == EQUALS || this == NOTEQUALS || this == LT || this == GT || this == LTE
+				|| this == GTE;
+	}
+
+	public boolean isStringOperator()
+	{
+		return this == STRCONCAT;
+	}
 
 	/**
 	 * Whether or not this {@code Operator} is an arithmetic operator.
 	 * 
 	 * @return Whether or not this {@code Operator} is an arithmetic operator
 	 */
-	public boolean isArithmetic()
+	public boolean isArithmeticOperator()
 	{
-		return this == ADD || this == SUBTRACT || this == MULTIPLY || this == DIVIDE || this == MODULO;
+		return this == ADD || this == SUBTRACT || this == MULTIPLY || this == DIVIDE
+				|| this == MODULO;
 	}
-
 
 	/**
 	 * Whether or not this {@code Operator} is a boolean operator.
@@ -123,14 +141,4 @@ public enum Operator
 		return this == AND || this == OR || this == NOT;
 	}
 
-
-	/**
-	 * Whether or not this {@code Operator} is a comparison operator.
-	 * 
-	 * @return Whether or not this {@code Operator} is an arithmetic operator
-	 */
-	public boolean isComparison()
-	{
-		return this == EQUALS || this == NOTEQUALS || this == LT || this == GT || this == LTE || this == GTE;
-	}
 }

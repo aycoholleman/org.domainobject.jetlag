@@ -8,7 +8,7 @@ class CommaToken extends Token {
 	}
 
 	@Override
-	public TokenType getType()
+	public TokenType type()
 	{
 		return TokenType.COMMA;
 	}

@@ -23,7 +23,7 @@ class WordToken extends Token {
 
 
 	@Override
-	public TokenType getType()
+	public TokenType type()
 	{
 		return TokenType.WORD;
 	}

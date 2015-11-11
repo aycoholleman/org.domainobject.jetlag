@@ -18,7 +18,7 @@ public final class SingleQuotedStringToken extends Token {
 
 
 	@Override
-	public TokenType getType()
+	public TokenType type()
 	{
 		return TokenType.SINGLE_QUOTED_STRING;
 	}

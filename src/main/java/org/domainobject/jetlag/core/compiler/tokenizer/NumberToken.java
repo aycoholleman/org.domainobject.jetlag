@@ -2,10 +2,9 @@ package org.domainobject.jetlag.core.compiler.tokenizer;
 
 /**
  * @author Ayco Holleman
- * @created Apr 27, 2015
  *
  */
-class NumberToken extends Token {
+public class NumberToken extends Token {
 
 	static boolean isNumberStart(char c)
 	{
@@ -14,19 +13,16 @@ class NumberToken extends Token {
 
 	private boolean decimal;
 
-
 	NumberToken(Cursor cursor)
 	{
 		super(cursor);
 	}
 
-
 	@Override
-	public TokenType getType()
+	public TokenType type()
 	{
 		return TokenType.NUMBER;
 	}
-
 
 	@Override
 	String doExtract() throws TokenExtractionException
@@ -53,7 +49,6 @@ class NumberToken extends Token {
 		}
 		return token.toString();
 	}
-
 
 	/**
 	 * Was the extracted number a decimal number (in stead of an integer)?

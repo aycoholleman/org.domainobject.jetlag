@@ -14,7 +14,7 @@ class LeftParenthesisToken extends Token {
 
 
 	@Override
-	public TokenType getType()
+	public TokenType type()
 	{
 		return TokenType.LPAREN;
 	}

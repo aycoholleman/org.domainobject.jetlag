@@ -19,7 +19,7 @@ class DoubleQuotedStringToken extends Token {
 
 
 	@Override
-	public TokenType getType()
+	public TokenType type()
 	{
 		return TokenType.DOUBLE_QUOTED_STRING;
 	}
