@@ -1,10 +1,13 @@
 package org.domainobject.jetlag.core.compiler.parser;
 
 import org.domainobject.jetlag.core.compiler.tokenizer.Token;
+import static org.domainobject.jetlag.core.compiler.parser.TerminalType.*;
 
 public class Terminal extends AbstractExpression {
 
+	protected TerminalType type;
 	private Token terminal;
+	private SimpleExpression expression;
 
 	@Override
 	public void parse()
@@ -14,27 +17,29 @@ public class Terminal extends AbstractExpression {
 		switch (token.type()) {
 			case COMMA:
 				break;
+			case SINGLE_QUOTED_STRING:
 			case DOUBLE_QUOTED_STRING:
-				break;
-			case LPAREN:
+				type = CONSTANT_STRING;
 				break;
 			case NUMBER:
+				type = CONSTANT_NUMBER;
+				break;
+			case LPAREN:
+				expression = new SimpleExpression();
 				break;
 			case OPERATOR:
 				break;
 			case RPAREN:
 				break;
-			case SINGLE_QUOTED_STRING:
-				break;
 			case WORD:
 				if (data.equals("false") || data.equals("true")) {
-					this.type = ExpressionType.TERMINAL_BOOLEAN;
+					this.type = CONSTANT_BOOLEAN;
 				}
 				else if (data.equals("null")) {
-					this.type = ExpressionType.TERMINAL_NULL;
+					this.type = CONSTANT_NULL;
 				}
 				else if (data.equals("not")) {
-					this.type = ExpressionType.TERMINAL_BOOLEAN;
+					this.type = TerminalType.CONSTANT_BOOLEAN;
 				}
 				break;
 			default:

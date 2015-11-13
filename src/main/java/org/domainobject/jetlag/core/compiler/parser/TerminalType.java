@@ -3,16 +3,14 @@ package org.domainobject.jetlag.core.compiler.parser;
 /**
  * @author Ayco Holleman
  */
-public enum ExpressionType
-{
+public enum TerminalType {
 	/**
 	 * 
 	 */
-	UNKNOWN,
-	TERMINAL_STRING,
-	TERMINAL_NUMBER,
-	TERMINAL_BOOLEAN,
-	TERMINAL_NULL,
+	CONSTANT_STRING,
+	CONSTANT_NUMBER,
+	CONSTANT_BOOLEAN,
+	CONSTANT_NULL,
 	TERMINAL_VARIABLE,
 	TERMINAL_FUNCTION,
 	ARITHMETIC,
