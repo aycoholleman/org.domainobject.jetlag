@@ -1,41 +1,28 @@
 package org.domainobject.jetlag.core.compiler.parser;
 
-import org.domainobject.jetlag.core.compiler.tokenizer.Token;
-import org.domainobject.jetlag.core.compiler.tokenizer.TokenType;
+import static org.domainobject.jetlag.core.compiler.tokenizer.TokenType.*;
 
-public class SimpleExpression extends AbstractExpression<LogicalExpression> {
+class SimpleExpression extends AbstractExpression {
 
-	private SimpleExpression nested;
+	/* Will be either a SimpleExpression or a LogicalExpression */
+	AbstractExpression child;
 
 	@Override
-	public void parse() throws ParseException
+	void parse() throws ParseException
 	{
-		if (tokenizer.at().type() == TokenType.LPAREN) {
+		if (tokenizer.at().type() == LPAREN) {
 			if (tokenizer.hasMoreTokens())
 				throw new EOFException(/* TODO */);
 			tokenizer.nextToken();
-			nested = new SimpleExpression();
-			descend(nested);
+			child = parse(new SimpleExpression());
 			if (tokenizer.nextToken() == null)
 				throw new EOFException(/* TODO */);
-			if (tokenizer.at().type() != TokenType.RPAREN)
+			if (tokenizer.at().type() != RPAREN)
 				throw new ParseException(/* TODO */);
 		}
 		else {
-			super.parse();
+			child = parse(new LogicalExpression());
 		}
-	}
-
-	@Override
-	protected LogicalExpression createChild()
-	{
-		return new LogicalExpression();
-	}
-
-	@Override
-	protected boolean isExpressionOperator(Token t)
-	{
-		return false;
 	}
 
 }

@@ -3,16 +3,16 @@ package org.domainobject.jetlag.core.compiler.parser;
 import org.domainobject.jetlag.core.compiler.tokenizer.OperatorToken;
 import org.domainobject.jetlag.core.compiler.tokenizer.Token;
 
-public class LogicalExpression extends AbstractExpression<Assignment> {
+class LogicalExpression extends Operation<Assignment> {
 
 	@Override
-	protected boolean isExpressionOperator(Token token)
+	boolean isOperator(Token token)
 	{
 		return (((OperatorToken) token).getOperator().isLogicalOperator());
 	}
 
 	@Override
-	protected Assignment createChild()
+	Assignment child()
 	{
 		return new Assignment();
 	}

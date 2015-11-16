@@ -3,7 +3,7 @@ package org.domainobject.jetlag.core.compiler.parser;
 import org.domainobject.jetlag.core.compiler.tokenizer.Token;
 import static org.domainobject.jetlag.core.compiler.parser.TerminalType.*;
 
-public class Terminal extends AbstractExpression {
+class Terminal extends AbstractExpression {
 
 	protected TerminalType type;
 	private Token terminal;

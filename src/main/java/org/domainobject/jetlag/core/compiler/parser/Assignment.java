@@ -3,16 +3,16 @@ package org.domainobject.jetlag.core.compiler.parser;
 import org.domainobject.jetlag.core.compiler.tokenizer.OperatorToken;
 import org.domainobject.jetlag.core.compiler.tokenizer.Token;
 
-public class Assignment extends AbstractExpression<Comparison> {
+class Assignment extends Operation<Comparison> {
 
 	@Override
-	protected Comparison createChild()
+	Comparison child()
 	{
 		return new Comparison();
 	}
 
 	@Override
-	protected boolean isExpressionOperator(Token token)
+	boolean isOperator(Token token)
 	{
 		return (((OperatorToken) token).getOperator().isAssignmentOperator());
 	}

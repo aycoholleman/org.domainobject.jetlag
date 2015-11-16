@@ -3,16 +3,16 @@ package org.domainobject.jetlag.core.compiler.parser;
 import org.domainobject.jetlag.core.compiler.tokenizer.OperatorToken;
 import org.domainobject.jetlag.core.compiler.tokenizer.Token;
 
-public class StringExpression extends AbstractExpression<ArithmeticExpression> {
+class StringExpression extends Operation<ArithmeticExpression> {
 
 	@Override
-	protected ArithmeticExpression createChild()
+	ArithmeticExpression child()
 	{
 		return new ArithmeticExpression();
 	}
 
 	@Override
-	protected boolean isExpressionOperator(Token token)
+	boolean isOperator(Token token)
 	{
 		return (((OperatorToken) token).getOperator().isStringOperator());
 	}
