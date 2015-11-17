@@ -1,12 +1,12 @@
 package org.domainobject.jetlag.core.model;
 
 /**
- * @author ayco
- * @created May 7, 2015
- *
+ * @author Ayco Holleman
  */
-public final class Rule {
-	
+public class Rule {
+
 	public String out;
+
+	private String name;
 
 }

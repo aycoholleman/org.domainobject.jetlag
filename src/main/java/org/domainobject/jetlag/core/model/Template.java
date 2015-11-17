@@ -1,10 +1,9 @@
 package org.domainobject.jetlag.core.model;
 
 /**
- * @author ayco
- * @created May 7, 2015
+ * @author Ayco Holleman
  *
  */
-public final class Template {
+public class Template {
 
 }

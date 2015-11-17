@@ -2,10 +2,13 @@ package org.domainobject.jetlag.core.compiler.parser;
 
 import org.domainobject.jetlag.core.compiler.tokenizer.Tokenizer;
 import org.domainobject.jetlag.core.funclib.def.LibDef;
+import org.domainobject.jetlag.core.model.Rule;
+import org.domainobject.jetlag.core.model.Template;
 
 abstract class AbstractExpression {
 
-	String rule;
+	Template template;
+	Rule rule;
 	Tokenizer tokenizer;
 	LibDef<?>[] libDefs;
 
@@ -13,6 +16,7 @@ abstract class AbstractExpression {
 
 	<T extends AbstractExpression> T parse(T child) throws ParseException
 	{
+		child.template = this.template;
 		child.rule = this.rule;
 		child.tokenizer = this.tokenizer;
 		child.libDefs = this.libDefs;
