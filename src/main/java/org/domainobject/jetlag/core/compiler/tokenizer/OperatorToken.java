@@ -35,13 +35,13 @@ public class OperatorToken extends Token {
 		char c0 = cursor.at();
 		char c1 = cursor.forward().at();
 		String token = String.valueOf(c0);
-		operator = Operator.forSymbol(token);
+		operator = Operator.parse(token);
 		if (c1 == NIL) {
 			return token;
 		}
 		String tmpTok = String.valueOf(new char[] { c0, c1 });
-		Operator tmpOp = Operator.forSymbol(tmpTok);
-		tmpOp = Operator.forSymbol(tmpTok);
+		Operator tmpOp = Operator.parse(tmpTok);
+		tmpOp = Operator.parse(tmpTok);
 		if (operator != null) {
 			token = tmpTok;
 			operator = tmpOp;

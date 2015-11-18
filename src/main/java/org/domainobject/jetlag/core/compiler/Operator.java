@@ -1,6 +1,8 @@
 package org.domainobject.jetlag.core.compiler;
 
 import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.HashMap;
 
 public enum Operator {
 
@@ -11,45 +13,62 @@ public enum Operator {
 	/* Comparison operators */
 	EQUALS("="), NOTEQUALS("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),
 	/* String operators */
-	STRCONCAT("&"),
+	STRCONCAT("&", "+"),
 	/* Assignment operator */
 	ASSIGN(":="),
 	/* Library namespace operator */
 	NAMESPACE("->", null);
 
-	private static final char[] startChars = new char[] { '+', '-', '*', '%', '/', '&', '|', '!',
-			'=', '<', '>', ':' };
-	private static final String[] symbols = new String[Operator.values().length];
-	private static final Operator[] opsAlphabetical = new Operator[Operator.values().length];
+	//@formatter:off
+	private static final char[] startChars = new char[] {
+		'+',
+		'-',
+		'*',
+		'%',
+		'/',
+		'&',
+		'|',
+		'!',
+		'=',
+		'<',
+		'>',
+		':'
+	};
+	//@formatter:on
+
+	private static final HashMap<String, Operator> table;
+	private static final EnumSet<Operator> arithOps;
+	private static final EnumSet<Operator> compOps;
 
 	static {
 		Arrays.sort(startChars);
-		Operator[] ops = values();
-		for (int i = 0; i < ops.length; ++i) {
-			symbols[i] = ops[i].symbol;
-			opsAlphabetical[i] = ops[i];
-		}
+		arithOps = EnumSet.range(ADD, MODULO);
+		compOps = EnumSet.range(EQUALS, GTE);
+		table = new HashMap<String, Operator>(values().length + 1, 1.0f);
+		for (Operator op : values())
+			table.put(op.symbol, op);
 	}
 
 	/**
-	 * Look up the {@code Operator} enum value corresponding to the specified symbol.
+	 * Look up the enum constant corresponding to the specified symbol.
 	 * 
 	 * @param symbol
 	 *            The symbol to look up
 	 * @return The {@code Operator} or {@code null} if the argument to this method is not
 	 *         a valid operator
 	 */
-	public static Operator forSymbol(String symbol)
+	public static Operator parse(String symbol)
 	{
-		int i = Arrays.binarySearch(symbols, symbol);
-		return i < 0 ? null : opsAlphabetical[i];
+		return table.get(symbol);
 	}
 
 	/**
-	 * Is the specified character the first character of at least one operator?
+	 * Establishes whether the specified character the first character of at least one
+	 * operator?
 	 * 
 	 * @param c
 	 *            The character to test
+	 * 
 	 * @return Whether or not the character is the first character of at least one
 	 *         operator
 	 */
@@ -74,7 +93,7 @@ public enum Operator {
 	}
 
 	/**
-	 * Get the symbol (i.e. character sequence) for this operator
+	 * Returns the symbol (i.e. character sequence) for this operator.
 	 * 
 	 * @return The symbol (i.e. character sequence) for this operator
 	 */
@@ -84,7 +103,7 @@ public enum Operator {
 	}
 
 	/**
-	 * Get the Java translation for this operator
+	 * Returns the Java translation for this operator.
 	 * 
 	 * @return The Java translation for this operator, or {@code null} if this operator
 	 *         has no equivalent in Java.
@@ -94,51 +113,54 @@ public enum Operator {
 		return javaSymbol;
 	}
 
+	/**
+	 * Whether or not this is a logical operator.
+	 * 
+	 * @return
+	 */
 	public boolean isLogicalOperator()
 	{
 		return this == AND || this == OR;
 	}
 
+	/**
+	 * Whether or not this is an assignment operator.
+	 * 
+	 * @return
+	 */
 	public boolean isAssignmentOperator()
 	{
 		return this == ASSIGN;
 	}
 
 	/**
-	 * Whether or not this {@code Operator} is a comparison operator.
+	 * Whether or not this is a comparison operator.
 	 * 
-	 * @return Whether or not this {@code Operator} is an arithmetic operator
+	 * @return
 	 */
 	public boolean isComparisonOperator()
 	{
-		return this == EQUALS || this == NOTEQUALS || this == LT || this == GT || this == LTE
-				|| this == GTE;
+		return compOps.contains(this);
 	}
 
+	/**
+	 * Whether or not this is a string operator.
+	 * 
+	 * @return
+	 */
 	public boolean isStringOperator()
 	{
 		return this == STRCONCAT;
 	}
 
 	/**
-	 * Whether or not this {@code Operator} is an arithmetic operator.
+	 * Whether or not this is an arithmetic operator.
 	 * 
-	 * @return Whether or not this {@code Operator} is an arithmetic operator
+	 * @return
 	 */
 	public boolean isArithmeticOperator()
 	{
-		return this == ADD || this == SUBTRACT || this == MULTIPLY || this == DIVIDE
-				|| this == MODULO;
-	}
-
-	/**
-	 * Whether or not this {@code Operator} is a boolean operator.
-	 * 
-	 * @return Whether or not this {@code Operator} is an boolean operator
-	 */
-	public boolean isBoolean()
-	{
-		return this == AND || this == OR || this == NOT;
+		return arithOps.contains(this);
 	}
 
 }

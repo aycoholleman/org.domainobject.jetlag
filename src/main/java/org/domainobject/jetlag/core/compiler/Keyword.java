@@ -3,13 +3,12 @@ package org.domainobject.jetlag.core.compiler;
 import java.util.HashMap;
 
 /**
- * @author ayco
- * @created May 1, 2015
+ * @author Ayco Holleman
  *
  */
-public enum Keyword
-{
-	NULL, NOT, AND, OR, TRUE, FALSE, EITHER, NEITHER;
+public enum Keyword {
+
+	NULL, NOT, AND, OR, TRUE, FALSE;
 
 	private static final HashMap<String, Keyword> table = new HashMap<>(10, 1F);
 
@@ -19,34 +18,31 @@ public enum Keyword
 		}
 	}
 
-
 	/**
-	 * Get the enum value corresponding to the specified keyword.
+	 * Returns the enum constant corresponding to the specified string.
 	 * 
-	 * @param keyword
-	 *            The {@code String} to lookup
-	 * @return The corresponding {@code KeyWord}, or {@code null} if the
-	 *         argument pased to this method is not a keyword.
+	 * @param word
+	 *            The string to lookup
+	 * 
+	 * @return The corresponding {@code KeyWord}, or {@code null} if the argument passed
+	 *         to this method is not a keyword.
 	 */
-	public static Keyword lookup(String keyword)
+	public static Keyword parse(String word)
 	{
-		return table.get(keyword);
+		return table.get(word);
 	}
 
 	private final String word;
-
 
 	public String toString()
 	{
 		return word;
 	}
 
-
 	private Keyword()
 	{
 		this.word = name().toLowerCase();
 	}
-
 
 	private Keyword(String word)
 	{
