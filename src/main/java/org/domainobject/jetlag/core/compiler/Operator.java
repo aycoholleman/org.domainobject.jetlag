@@ -7,11 +7,11 @@ import java.util.HashMap;
 public enum Operator {
 
 	/* Arithmetic operators */
-	ADD("+"), SUBTRACT("-"), MULTIPLY("*"), DIVIDE("/"), MODULO("%"),
+	PLUS("+"), MINUS("-"), TIMES("*"), DIV("/"), MOD("%"),
 	/* Boolean operators */
 	AND("&&"), OR("||"), NOT("!"),
 	/* Comparison operators */
-	EQUALS("="), NOTEQUALS("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),
+	EQ("="), NEQ("!="), LT("<"), GT(">"), LTE("<="), GTE(">="),
 	/* String operators */
 	STRCONCAT("&", "+"),
 	/* Assignment operator */
@@ -42,8 +42,8 @@ public enum Operator {
 
 	static {
 		Arrays.sort(startChars);
-		arithOps = EnumSet.range(ADD, MODULO);
-		compOps = EnumSet.range(EQUALS, GTE);
+		arithOps = EnumSet.range(PLUS, MOD);
+		compOps = EnumSet.range(EQ, GTE);
 		table = new HashMap<String, Operator>(values().length + 1, 1.0f);
 		for (Operator op : values())
 			table.put(op.symbol, op);
@@ -165,6 +165,6 @@ public enum Operator {
 
 	public boolean isUnaryOperator()
 	{
-		return this == ADD || this == SUBTRACT || this == NOT;
+		return this == PLUS || this == MINUS || this == NOT;
 	}
 }
