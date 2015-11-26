@@ -19,10 +19,10 @@ class Terminal extends AbstractExpression {
 				break;
 			case SINGLE_QUOTED_STRING:
 			case DOUBLE_QUOTED_STRING:
-				type = CONSTANT_STRING;
+				type = LITERAL_STRING;
 				break;
 			case NUMBER:
-				type = CONSTANT_NUMBER;
+				type = LITERAL_NUMBER;
 				break;
 			case LPAREN:
 				expression = new SimpleExpression();

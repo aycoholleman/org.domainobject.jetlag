@@ -163,4 +163,8 @@ public enum Operator {
 		return arithOps.contains(this);
 	}
 
+	public boolean isUnaryOperator()
+	{
+		return this == ADD || this == SUBTRACT || this == NOT;
+	}
 }
