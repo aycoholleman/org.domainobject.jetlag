@@ -32,7 +32,7 @@ public enum Keyword {
 		return table.get(word);
 	}
 
-	private final String word;
+	private String word;
 
 	public String toString()
 	{
